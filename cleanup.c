@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/18 15:03:15 by sdavi-al         ###   ########.fr       */
+/*   Created: 2025/06/18 15:01:20 by sdavi-al          #+#    #+#             */
+/*   Updated: 2025/06/18 15:03:19 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int	main(void)
+void	free_token_list(t_token *list)
 {
-	char	*line;
-	t_token	*tokens;
+	t_token	*next_node;
 
-	while (1)
+	while (list)
 	{
-		line = readline("minishell> ");
-		if (line == NULL)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (line[0] != '\0')
-		{
-			add_history(line);
-			printf("--- Lexer Output ---\n");
-			tokens = main_lexer(line);
-			print_token_list(tokens);
-			free_token_list(tokens);
-			printf("--------------------\n");
-		}
-		free(line);
+		next_node = list->next;
+		free(list->value);
+		free(list);
+		list = next_node;
 	}
-	return (0);
 }

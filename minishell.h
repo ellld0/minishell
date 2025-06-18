@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/18 14:27:26 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:08:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_token	*main_lexer(char *line);
 int		is_whitespace(char c);
 int		is_operator(char c);
 int		handle_word_token(t_token **token_list, const char *line);
-
+void	free_token_list(t_token *list);
+void	print_token_list(t_token *list);
 
 #endif

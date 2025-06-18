@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/18 15:03:15 by sdavi-al         ###   ########.fr       */
+/*   Created: 2025/06/18 15:03:25 by sdavi-al          #+#    #+#             */
+/*   Updated: 2025/06/18 18:09:55 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int	main(void)
+void	print_token_list(t_token *list)
 {
-	char	*line;
-	t_token	*tokens;
+	int	i;
 
-	while (1)
+	i = 0;
+	while (list)
 	{
-		line = readline("minishell> ");
-		if (line == NULL)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (line[0] != '\0')
-		{
-			add_history(line);
-			printf("--- Lexer Output ---\n");
-			tokens = main_lexer(line);
-			print_token_list(tokens);
-			free_token_list(tokens);
-			printf("--------------------\n");
-		}
-		free(line);
+		printf("Token %d: ", i++);
+		printf("Type = %d, ", list->type);
+		printf("Value = [%s]\n", list->value);
+		list = list->next;
 	}
-	return (0);
 }
