@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:28:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/18 18:17:36 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:29:05 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,21 @@ static int	get_word_len(const char *line)
 	char	quote_char;
 
 	i = 0;
-	if (line[i] == '\'' || line[i] == '\"')
+	while (line[i] && !is_whitespace(line[i]) && !is_operator(line[i]))
 	{
-		quote_char = line[i];
-		i++;
-		while (line[i] && line[i] != quote_char)
+		if (line[i] == '\'' || line[i] == '\"')
+		{
+			quote_char = line[i];
 			i++;
-		if (line[i] == quote_char)
+			while (line[i] && line[i] != quote_char)
+				i++;
+			if (line[i] == quote_char)
+				i++;
+		}
+		else
+		{
 			i++;
-	}
-	else
-	{
-		while (line[i] && !is_whitespace(line[i]) && !is_operator(line[i]))
-			i++;
+		}
 	}
 	return (i);
 }
