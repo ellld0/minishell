@@ -1,7 +1,10 @@
 NAME = minishell
 
 SRC =	main.c \
-
+		lexer.c \
+		handle_word_token.c \
+		utils.c \
+		
 
 OBJ = $(SRC:.c=.o)
 
