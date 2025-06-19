@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/19 11:10:52 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:06:06 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int			is_whitespace(char c);
 int			is_operator(char c);
 int			handle_word_token(t_token **token_list, const char *line);
 void		free_token_list(t_token *list);
+void		free_command_table(t_command *cmd_head);
+void		print_command_table(t_command *cmd_head);
 void		print_token_list(t_token *list);
 char		*remove_quotes(const char *str);
 void		redir_add_back(t_redir **list, t_redir *new_redir);
