@@ -8,6 +8,8 @@ SRC =	main.c \
 		debug.c \
 		quote_removal.c \
 		parser.c \
+		redirect_parsing.c \
+		
 				
 
 OBJ = $(SRC:.c=.o)

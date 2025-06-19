@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/19 09:05:35 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:10:52 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,19 @@ typedef struct s_command
 }	t_command;
 
 
-void	add_token_back(t_token **list, t_token *new_node);
-int		append_token(t_token **list, const char *line, int len,
-			t_token_type type);
-int		handle_operator_token(t_token **token_list, const char *line);
-t_token	*main_lexer(char *line);
-int		is_whitespace(char c);
-int		is_operator(char c);
-int		handle_word_token(t_token **token_list, const char *line);
-void	free_token_list(t_token *list);
-void	print_token_list(t_token *list);
-char	*remove_quotes(const char *str);
+void		add_token_back(t_token **list, t_token *new_node);
+int			append_token(t_token **list, const char *line, int len,
+				t_token_type type);
+int			handle_operator_token(t_token **token_list, const char *line);
+t_token		*main_lexer(char *line);
+int			is_whitespace(char c);
+int			is_operator(char c);
+int			handle_word_token(t_token **token_list, const char *line);
+void		free_token_list(t_token *list);
+void		print_token_list(t_token *list);
+char		*remove_quotes(const char *str);
+void		redir_add_back(t_redir **list, t_redir *new_redir);
+void		handle_redirection(t_command *cmd, t_token **token_ptr);
+t_command	*parser(t_token *tokens);
 
 #endif
