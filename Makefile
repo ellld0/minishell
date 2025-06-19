@@ -6,8 +6,9 @@ SRC =	main.c \
 		utils.c \
 		cleanup.c \
 		debug.c \
-		
-		
+		quote_removal.c \
+		parser.c \
+				
 
 OBJ = $(SRC:.c=.o)
 

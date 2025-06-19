@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/18 18:08:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:05:35 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_redir
+{
+	char			*filename;
+	t_token_type	type;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_command
+{
+	char				**args;
+	t_redir				*redirections;
+	struct s_command	*next;
+}	t_command;
+
+
 void	add_token_back(t_token **list, t_token *new_node);
 int		append_token(t_token **list, const char *line, int len,
 			t_token_type type);
@@ -45,5 +60,6 @@ int		is_operator(char c);
 int		handle_word_token(t_token **token_list, const char *line);
 void	free_token_list(t_token *list);
 void	print_token_list(t_token *list);
+char	*remove_quotes(const char *str);
 
 #endif

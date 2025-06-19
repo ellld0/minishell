@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:28:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/18 18:29:05 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:43:03 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	get_word_len(const char *line)
 	}
 	return (i);
 }
+
 
 int	handle_word_token(t_token **token_list, const char *line)
 {
