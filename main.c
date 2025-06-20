@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/19 13:04:30 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:10:53 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	main(void)
 {
-	char	*line;
-	t_token	*tokens;
+	char		*line;
+	t_token		*tokens;
+	t_command	*commands;
 
 	while (1)
 	{
@@ -28,11 +29,11 @@ int	main(void)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			printf("--- Lexer Output ---\n");
 			tokens = main_lexer(line);
-			print_token_list(tokens);
+			commands = parser(tokens);
 			free_token_list(tokens);
-			printf("--------------------\n");
+			print_command_table(commands);
+			free_command_table(commands);
 		}
 		free(line);
 	}
