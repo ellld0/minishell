@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/19 13:06:06 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:03:46 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_command
 	t_redir				*redirections;
 	struct s_command	*next;
 }	t_command;
-
 
 void		add_token_back(t_token **list, t_token *new_node);
 int			append_token(t_token **list, const char *line, int len,
