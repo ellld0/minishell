@@ -6,18 +6,20 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/19 13:10:53 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:53:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
 	t_token		*tokens;
 	t_command	*commands;
 
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -32,6 +34,7 @@ int	main(void)
 			tokens = main_lexer(line);
 			commands = parser(tokens);
 			free_token_list(tokens);
+			executor(commands, envp);
 			print_command_table(commands);
 			free_command_table(commands);
 		}
