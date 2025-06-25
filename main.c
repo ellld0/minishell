@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/25 17:53:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:13:58 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv, char **envp)
 			commands = parser(tokens);
 			free_token_list(tokens);
 			executor(commands, envp);
-			print_command_table(commands);
 			free_command_table(commands);
 		}
 		free(line);

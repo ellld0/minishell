@@ -11,7 +11,7 @@ SRC =	main.c \
 		redirect_parsing.c \
 		path_finder.c \
 		executor.c \
-		
+
 		
 LIBFT_DIR = ./libft
 
@@ -21,7 +21,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_DIR) 
 
 LIBS = -L$(LIBFT_DIR) -lft -lreadline
 

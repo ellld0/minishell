@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/25 18:05:00 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:08:48 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
+# include "libft.h"
 
 typedef enum e_token_type
 {
@@ -66,5 +68,7 @@ char		*remove_quotes(const char *str);
 void		redir_add_back(t_redir **list, t_redir *new_redir);
 void		handle_redirection(t_command *cmd, t_token **token_ptr);
 t_command	*parser(t_token *tokens);
+void		executor(t_command *cmd, char **envp);
+char		*find_command_path(char *cmd, char **envp);
 
 #endif
