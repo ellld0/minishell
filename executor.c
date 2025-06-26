@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:53:43 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/26 18:37:15 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:54:30 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,25 @@ static int	is_builtin(char *cmd_name)
 
 static void	execute_builtin(t_command *cmd)
 {
+	int	original_stdin;
+	int	original_stdout;
+
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
+	if (apply_redirections(cmd) == -1)
+	{
+		close(original_stdin);
+		close(original_stdout);
+		return ;
+	}
 	if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 		do_echo(cmd->args);
 	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		do_pwd();
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(original_stdin);
+	close(original_stdout);
 }
 
 void	executor(t_command *cmd, char **envp)
