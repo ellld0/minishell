@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/25 19:08:48 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:56:21 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,8 @@ void		handle_redirection(t_command *cmd, t_token **token_ptr);
 t_command	*parser(t_token *tokens);
 void		executor(t_command *cmd, char **envp);
 char		*find_command_path(char *cmd, char **envp);
+void		do_pwd(void);
+void		do_echo(char **args);
+void		executor(t_command *cmd, char **envp);
 
 #endif

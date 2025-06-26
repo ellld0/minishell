@@ -11,6 +11,8 @@ SRC =	main.c \
 		redirect_parsing.c \
 		path_finder.c \
 		executor.c \
+		builtins.c \
+		
 
 		
 LIBFT_DIR = ./libft

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:53:43 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/25 18:12:52 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:58:20 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,40 @@ static void	execute_single_command(t_command *cmd, char **envp)
 	free(path);
 }
 
+static int	is_builtin(char *cmd_name)
+{
+	if (!cmd_name)
+		return (0);
+	if (ft_strncmp(cmd_name, "echo", 5) == 0)
+		return (1);
+	if (ft_strncmp(cmd_name, "pwd", 4) == 0)
+		return (1);
+	return (0);
+}
+
+static void	execute_builtin(t_command *cmd)
+{
+	if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+		do_echo(cmd->args);
+	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+		do_pwd();
+}
+
 void	executor(t_command *cmd, char **envp)
 {
-	if (!cmd)
+	if (!cmd || !cmd->args || !cmd->args[0])
 		return ;
 	if (cmd->next != NULL)
 	{
 		printf("Pipes are not handled yet.\n");
 		return ;
 	}
-	execute_single_command(cmd, envp);
+	if (is_builtin(cmd->args[0]))
+	{
+		execute_builtin(cmd);
+	}
+	else
+	{
+		execute_single_command(cmd, envp);
+	}
 }
