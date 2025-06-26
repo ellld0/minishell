@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/26 09:56:21 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:34:35 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ char		*find_command_path(char *cmd, char **envp);
 void		do_pwd(void);
 void		do_echo(char **args);
 void		executor(t_command *cmd, char **envp);
+int			apply_redirections(t_command *cmd);
 
 #endif

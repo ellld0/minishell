@@ -12,6 +12,7 @@ SRC =	main.c \
 		path_finder.c \
 		executor.c \
 		builtins.c \
+		redirections.c \
 		
 
 		

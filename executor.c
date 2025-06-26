@@ -6,15 +6,20 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:53:43 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/26 09:58:20 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:37:15 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child_process_exec(char *path, char **args, char **envp)
+static void	child_process_exec(t_command *cmd, char *path, char **envp)
 {
-	execve(path, args, envp);
+	if (apply_redirections(cmd) == -1)
+	{
+		free(path);
+		exit(1);
+	}
+	execve(path, cmd->args, envp);
 	perror("minishell");
 	free(path);
 	exit(127);
@@ -25,6 +30,8 @@ static void	execute_single_command(t_command *cmd, char **envp)
 	pid_t	pid;
 	char	*path;
 
+	if (!cmd->args[0] || cmd->args[0][0] == '\0')
+		return ;
 	path = find_command_path(cmd->args[0], envp);
 	if (!path)
 	{
@@ -39,7 +46,7 @@ static void	execute_single_command(t_command *cmd, char **envp)
 		return ;
 	}
 	if (pid == 0)
-		child_process_exec(path, cmd->args, envp);
+		child_process_exec(cmd, path, envp);
 	waitpid(pid, NULL, 0);
 	free(path);
 }
