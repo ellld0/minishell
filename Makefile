@@ -13,8 +13,8 @@ SRC =	main.c \
 		executor.c \
 		builtins.c \
 		redirections.c \
-		
-
+		exec_builtins.c \
+		exec_pipe.c \
 		
 LIBFT_DIR = ./libft
 

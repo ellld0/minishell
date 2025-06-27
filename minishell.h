@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/26 18:39:48 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:05:53 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,11 @@ void		do_pwd(void);
 void		do_echo(char **args);
 void		executor(t_command *cmd, char **envp);
 int			apply_redirections(t_command *cmd);
+void		do_cd(char **args, char **envp);
+void		do_exit(char **args);
+int			is_builtin(char *cmd_name);
+void		execute_builtin(t_command *cmd, char **envp);
+void		execute_pipe(t_command *cmd, char **envp);
+void		run_command_in_child(t_command *cmd, char **envp);
 
 #endif
