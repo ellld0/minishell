@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:53:43 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:01:24 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/29 19:08:56 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	execute_and_exit(t_command *cmd, char **envp)
 		exit(127);
 	}
 	execve(path, cmd->args, envp);
-
 	perror("minishell");
 	free(path);
 	exit(126);

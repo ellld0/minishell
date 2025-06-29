@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:00:31 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/29 19:09:13 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		execute_and_exit(t_command *cmd, char **envp);
 void		run_command_in_child(t_command *cmd, int *pipe_fds,
 				int prev_read_end, char **envp);
 void		parent_pipe_handler(int *pipe_fds, int *prev_read_end,
-			t_command *cmd);
+				t_command *cmd);
 void		wait_for_children(int last_pid);
 
 #endif
