@@ -6,13 +6,12 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:38:24 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/23 12:02:24 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/29 19:16:41 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Adds a new token node at the end of the linked list.
 void	add_token_back(t_token **list, t_token *new_node)
 {
 	t_token	*current;
@@ -30,13 +29,6 @@ void	add_token_back(t_token **list, t_token *new_node)
 	current->next = new_node;
 }
 
-/*
-** Creates a new token with the given type and a substring
-** from the input line. The substring has length 'len'.
-** It allocates memory for both the token and its value,
-** copies the content from the input line, and appends
-** the new token to the token list using add_token_back().
-*/
 int	append_token(t_token **list, const char *line, int len,
 		t_token_type type)
 {
@@ -67,15 +59,6 @@ int	append_token(t_token **list, const char *line, int len,
 	return (len);
 }
 
-/*
-** Checks if the current line position starts with an operator.
-** Supports both single-character operators ('<', '>', '|')
-** and double-character operators ('<<', '>>').
-** If an operator is found, the function creates a token
-** of the correct type and length using append_token().
-** Returns the number of characters consumed (1 or 2),
-** or 0 if no operator was found.
-*/
 int	handle_operator_token(t_token **token_list, const char *line)
 {
 	if (line[0] == '<' && line[1] == '<')
@@ -90,31 +73,6 @@ int	handle_operator_token(t_token **token_list, const char *line)
 		return (append_token(token_list, line, 1, TOKEN_PIPE));
 	return (0);
 }
-
-/*
-** The main lexer function.
-**
-** This function takes the user's raw input line and converts it
-** into a linked list of tokens (t_token). It loops through each
-** character of the input line and classifies parts of the string
-** into tokens like words, operators, and special symbols.
-**
-** Main steps:
-** - Skip whitespace between tokens.
-** - If the current character starts an operator (like '|', '<', '<<'),
-**   it calls handle_operator_token() to create the correct token.
-** - If the current character starts a word (command or argument),
-**   it calls handle_word_token() to process and create a word token.
-**
-** The variable 'consumed' tracks how many characters each handler
-** function consumes from the line, so we can move forward correctly.
-** 
-** If for any reason no characters were consumed (to avoid infinite loops),
-** we manually advance 'i' by 1.
-**
-** The final result is a linked list of tokens, which the parser will
-** later use to build a structured command tree for execution.
-*/
 
 t_token	*main_lexer(char *line)
 {
