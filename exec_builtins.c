@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:55:17 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 17:58:27 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:50:19 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ int	is_builtin(char *cmd_name)
 		return (1);
 	if (ft_strncmp(cmd_name, "exit", 5) == 0)
 		return (1);
+	return (0);
+}
+
+int	dispatch_builtin(t_command *cmd, char **envp)
+{
+	if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+		do_echo(cmd->args);
+	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+		do_pwd();
+	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
+		do_cd(cmd->args, envp);
+	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+		do_exit(cmd->args);
 	return (0);
 }
 
