@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:37:23 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:12:53 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ void		free_env(void);
 char		*get_env_value(const char *name);
 t_list		*find_env_node(const char *name);
 void		set_env_var(const char *name, const char *value);
+void		do_unset(char **args);
 
 #endif

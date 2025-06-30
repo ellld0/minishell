@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:55:17 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:48:22 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:14:02 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	is_builtin(char *cmd_name)
 		return (1);
 	if (ft_strcmp(cmd_name, "env") == 0)
 		return (1);
+	if (ft_strcmp(cmd_name, "unset") == 0)
+		return (1);
 	return (0);
 }
 
@@ -45,6 +47,8 @@ int	dispatch_builtin(t_command *cmd)
 		do_env();
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
 		do_export(cmd->args);
+	else if (ft_strcmp(cmd->args[0], "unset") == 0)
+		do_unset(cmd->args);
 	return (0);
 }
 
