@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:09:13 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:34:24 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,34 @@ char		*remove_quotes(const char *str);
 void		redir_add_back(t_redir **list, t_redir *new_redir);
 void		handle_redirection(t_command *cmd, t_token **token_ptr);
 t_command	*parser(t_token *tokens);
-void		executor(t_command *cmd, char **envp);
-char		*find_command_path(char *cmd, char **envp);
+void		executor(t_command *cmd);
+char		*find_command_path(char *cmd);
 void		do_pwd(void);
 void		do_echo(char **args);
-void		executor(t_command *cmd, char **envp);
 int			apply_redirections(t_command *cmd);
-void		do_cd(char **args, char **envp);
+void		do_cd(char **args);
 void		do_exit(char **args);
+void		do_env(void);
 int			is_builtin(char *cmd_name);
-void		execute_builtin(t_command *cmd, char **envp);
+void		execute_builtin(t_command *cmd);
 void		execute_single_command(t_command *cmd, char **envp);
-int			dispatch_builtin(t_command *cmd, char **envp);
+int			dispatch_builtin(t_command *cmd);
 void		setup_child_io(t_command *cmd, int *pipe_fds, int prev_read_end);
-void		execute_and_exit(t_command *cmd, char **envp);
+void		execute_and_exit(t_command *cmd);
 void		run_command_in_child(t_command *cmd, int *pipe_fds,
-				int prev_read_end, char **envp);
+				int prev_read_end);
 void		parent_pipe_handler(int *pipe_fds, int *prev_read_end,
 				t_command *cmd);
 void		wait_for_children(int last_pid);
+t_list		**get_env_list(void);
+void		init_env(char **envp);
+char		**env_list_to_array(void);
+void		free_array(char **env_arr);
+void		free_env(void);
+char		*get_env_value(const char *name);
+
+
+
+
 
 #endif

@@ -6,11 +6,26 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 18:57:02 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:16:17 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:25:06 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_array(char **env_arr)
+{
+	int	i;
+
+	if (!env_arr)
+		return ;
+	i = 0;
+	while (env_arr[i])
+	{
+		free(env_arr[i]);
+		i++;
+	}
+	free(env_arr);
+}
 
 static int	is_parent_builtin(t_command *cmd)
 {
@@ -26,13 +41,14 @@ static int	is_parent_builtin(t_command *cmd)
 	return (0);
 }
 
-static void	execute_pipeline(t_command *cmd, char **envp)
+static void	execute_pipeline(t_command *cmd)
 {
 	int		pipe_fds[2];
 	int		prev_read_end;
 	pid_t	pid;
 
 	prev_read_end = STDIN_FILENO;
+	pid = -1;
 	while (cmd)
 	{
 		if (cmd->next)
@@ -42,25 +58,22 @@ static void	execute_pipeline(t_command *cmd, char **envp)
 		if (pid == -1)
 			return (perror("fork"));
 		if (pid == 0)
-			run_command_in_child(cmd, pipe_fds, prev_read_end, envp);
+			run_command_in_child(cmd, pipe_fds, prev_read_end);
 		parent_pipe_handler(pipe_fds, &prev_read_end, cmd);
 		cmd = cmd->next;
 	}
-	waitpid(pid, NULL, 0);
-	while (wait(NULL) > 0)
-		;
+	if (pid != -1)
+		wait_for_children(pid);
 }
 
-void	executor(t_command *cmd, char **envp)
+void	executor(t_command *cmd)
 {
 	if (!cmd)
 		return ;
 	if (is_parent_builtin(cmd))
-	{
-		dispatch_builtin(cmd, envp);
-	}
+		dispatch_builtin(cmd);
 	else
 	{
-		execute_pipeline(cmd, envp);
+		execute_pipeline(cmd);
 	}
 }

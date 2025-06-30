@@ -6,7 +6,7 @@
 #    By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 17:48:35 by sdavi-al          #+#    #+#              #
-#    Updated: 2025/02/10 17:26:46 by sdavi-al         ###   ########.fr        #
+#    Updated: 2025/06/30 15:20:04 by sdavi-al         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +57,8 @@ SRCS = ft_isalpha.c \
 	prints.c \
 	prints2.c \
 	ft_formatspc.c \
-	
-
-BONUS_SRCS = ft_lstnew.c \
+	ft_strcmp.c \
+	ft_lstnew.c \
 	ft_lstadd_front.c \
 	ft_lstsize.c \
 	ft_lstlast.c \
@@ -73,8 +72,6 @@ BONUS_SRCS = ft_lstnew.c \
 
 OBJ = $(SRCS:.c=.o)
 
-BONUS_OBJ = $(BONUS_SRCS:.c=.o)
-
 RM = rm -f
 
 all: $(NAME)
@@ -82,19 +79,16 @@ all: $(NAME)
 $(NAME): $(OBJ)
 #	$(AR) $@ $^
 
-bonus: $(OBJ) $(BONUS_OBJ)
-#	$(AR) $(NAME) $(OBJ) $(BONUS_OBJ)
-
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $^ 
 	$(AR) $(NAME) $@
 
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ)
+	$(RM) $(OBJ)
 
 fclean:	clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

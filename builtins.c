@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 09:48:42 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:15:45 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:28:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,33 +49,15 @@ void	do_echo(char **args)
 		printf("\n");
 }
 
-static char	*ft_getenv(const char *name, char **envp)
-{
-	int		i;
-	int		name_len;
 
-	name_len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], name, name_len) == 0)
-		{
-			if (envp[i][name_len] == '=')
-				return (envp[i] + name_len + 1);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-void	do_cd(char **args, char **envp)
+void	do_cd(char **args)
 {
 	char	*path;
 
 	path = args[1];
 	if (path == NULL)
 	{
-		path = ft_getenv("HOME", envp);
+		path = get_env_value("HOME");
 		if (!path)
 		{
 			write(2, "minishell: cd: HOME not set\n", 28);
@@ -83,10 +65,9 @@ void	do_cd(char **args, char **envp)
 		}
 	}
 	if (chdir(path) == -1)
-	{
-		write(2, "minishell: cd: ", 15);
-		perror(path);
-	}
+		perror("minishell: cd");
+	if (args[1] == NULL)
+		free(path);
 }
 
 void	do_exit(char **args)
@@ -105,4 +86,16 @@ void	do_exit(char **args)
 		exit(status);
 	}
 	exit(0);
+}
+
+void	do_env(void)
+{
+	t_list	*current;
+
+	current = *(get_env_list());
+	while (current)
+	{
+		printf("%s\n", (char *)current->content);
+		current = current->next;
+	}
 }

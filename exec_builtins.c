@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:55:17 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:16:04 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:34:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,22 @@ int	is_builtin(char *cmd_name)
 	return (0);
 }
 
-int	dispatch_builtin(t_command *cmd, char **envp)
+int	dispatch_builtin(t_command *cmd)
 {
-	if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		do_echo(cmd->args);
-	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		do_pwd();
-	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		do_cd(cmd->args, envp);
-	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+	else if (ft_strcmp(cmd->args[0], "cd") == 0)
+		do_cd(cmd->args);
+	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		do_exit(cmd->args);
+	else if (ft_strcmp(cmd->args[0], "env") == 0)
+		do_env();
 	return (0);
 }
 
-void	execute_builtin(t_command *cmd, char **envp)
+void	execute_builtin(t_command *cmd)
 {
 	int	original_stdin;
 	int	original_stdout;
@@ -58,7 +60,7 @@ void	execute_builtin(t_command *cmd, char **envp)
 	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		do_pwd();
 	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		do_cd(cmd->args, envp);
+		do_cd(cmd->args);
 	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
 		do_exit(cmd->args);
 	dup2(original_stdin, STDIN_FILENO);

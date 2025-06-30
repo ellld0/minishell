@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:54:58 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/02/15 16:19:02 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:32:56 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int			ft_printpercent(void);
 int			ft_formatspc(va_list args, const char format);
 int			ft_printf(const char *str, ...);
 int			ft_printnbr_unsigned(unsigned int n);
+int			ft_strcmp(const char *s1, const char *s2);
 
 #endif

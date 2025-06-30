@@ -15,6 +15,7 @@ SRC =	main.c \
 		builtins.c \
 		redirections.c \
 		exec_builtins.c \
+		environment.c \
 
 		
 LIBFT_DIR = ./libft
