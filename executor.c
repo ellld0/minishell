@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 18:57:02 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:39:05 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:49:24 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	is_parent_builtin(t_command *cmd)
 		return (1);
 	if (ft_strcmp(name, "exit") == 0)
 		return (1);
-	if (ft_strcmp(name, "export") == 0 && cmd->args[1])
+	if (ft_strcmp(name, "export") == 0)
 		return (1);
 	if (ft_strcmp(name, "unset") == 0)
 		return (1);

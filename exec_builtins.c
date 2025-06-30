@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:55:17 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:39:47 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:48:22 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@ int	is_builtin(char *cmd_name)
 {
 	if (!cmd_name)
 		return (0);
-	if (ft_strncmp(cmd_name, "echo", 5) == 0)
+	if (ft_strcmp(cmd_name, "echo") == 0)
 		return (1);
-	if (ft_strncmp(cmd_name, "pwd", 4) == 0)
+	if (ft_strcmp(cmd_name, "pwd") == 0)
 		return (1);
-	if (ft_strncmp(cmd_name, "cd", 3) == 0)
+	if (ft_strcmp(cmd_name, "cd") == 0)
 		return (1);
-	if (ft_strncmp(cmd_name, "exit", 5) == 0)
+	if (ft_strcmp(cmd_name, "exit") == 0)
+		return (1);
+	if (ft_strcmp(cmd_name, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd_name, "env") == 0)
 		return (1);
 	return (0);
 }
