@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 09:48:42 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 14:28:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:26:43 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	do_echo(char **args)
 	if (newline_flag)
 		printf("\n");
 }
-
 
 void	do_cd(char **args)
 {

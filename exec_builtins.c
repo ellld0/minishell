@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:55:17 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 14:34:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:39:47 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	dispatch_builtin(t_command *cmd)
 		do_exit(cmd->args);
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
 		do_env();
+	else if (ft_strcmp(cmd->args[0], "export") == 0)
+		do_export(cmd->args);
 	return (0);
 }
 

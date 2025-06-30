@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 14:34:24 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:37:23 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			apply_redirections(t_command *cmd);
 void		do_cd(char **args);
 void		do_exit(char **args);
 void		do_env(void);
+void		do_export(char **args);
 int			is_builtin(char *cmd_name);
 void		execute_builtin(t_command *cmd);
 void		execute_single_command(t_command *cmd, char **envp);
@@ -94,9 +95,7 @@ char		**env_list_to_array(void);
 void		free_array(char **env_arr);
 void		free_env(void);
 char		*get_env_value(const char *name);
-
-
-
-
+t_list		*find_env_node(const char *name);
+void		set_env_var(const char *name, const char *value);
 
 #endif
