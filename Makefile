@@ -18,6 +18,7 @@ SRC =	main.c \
 		environment.c \
 		export.c \
 		unset.c \
+		here_doc.c
 		
 
 
