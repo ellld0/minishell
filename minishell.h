@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 20:50:52 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 06:18:23 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void		print_command_table(t_command *cmd_head);
 void		print_token_list(t_token *list);
 char		*remove_quotes(const char *str);
 void		redir_add_back(t_redir **list, t_redir *new_redir);
-void		handle_redirection(t_command *cmd, t_token **token_ptr);
 t_command	*parser(t_token *tokens);
 void		executor(t_command *cmd);
 char		*find_command_path(char *cmd);
@@ -100,5 +99,7 @@ t_list		*find_env_node(const char *name);
 void		set_env_var(const char *name, const char *value);
 void		do_unset(char **args);
 int			heredoc_reader(const char *delimiter);
+void		handle_file_redirection(t_command *cmd, t_token **token_ptr);
+t_command	*process_segment(t_token **token_ptr);
 
 #endif

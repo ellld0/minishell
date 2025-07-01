@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:08:21 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/23 12:03:14 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 06:17:21 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	redir_add_back(t_redir **list, t_redir *new_redir)
 	current->next = new_redir;
 }
 
-void	handle_redirection(t_command *cmd, t_token **token_ptr)
+void	handle_file_redirection(t_command *cmd, t_token **token_ptr)
 {
 	t_redir	*new_redir;
 
@@ -37,6 +37,7 @@ void	handle_redirection(t_command *cmd, t_token **token_ptr)
 	if (!new_redir)
 		return ;
 	new_redir->type = (*token_ptr)->type;
+	new_redir->heredoc_fd = -1;
 	new_redir->next = NULL;
 	*token_ptr = (*token_ptr)->next;
 	if (*token_ptr && (*token_ptr)->type == TOKEN_WORD)

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 10:19:28 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/26 18:47:38 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 06:25:24 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,30 @@ static int	open_redir_file(t_redir *redir)
 static int	handle_single_redir(t_redir *redir)
 {
 	int	file_fd;
-	int	status;
+	int	target_fd;
 
-	status = 0;
-	file_fd = open_redir_file(redir);
-	if (file_fd == -1)
-		return (-1);
-	if (redir->type == TOKEN_REDIR_IN)
+	if (redir->type == TOKEN_HEREDOC)
 	{
-		if (dup2(file_fd, STDIN_FILENO) == -1)
-			status = -1;
+		file_fd = redir->heredoc_fd;
 	}
 	else
 	{
-		if (dup2(file_fd, STDOUT_FILENO) == -1)
-			status = -1;
+		file_fd = open_redir_file(redir);
+		if (file_fd == -1)
+			return (-1);
 	}
-	if (status == -1)
+	if (redir->type == TOKEN_REDIR_IN || redir->type == TOKEN_HEREDOC)
+		target_fd = STDIN_FILENO;
+	else
+		target_fd = STDOUT_FILENO;
+	if (dup2(file_fd, target_fd) == -1)
+	{
 		perror("dup2");
+		close(file_fd);
+		return (-1);
+	}
 	close(file_fd);
-	return (status);
+	return (0);
 }
 
 int	apply_redirections(t_command *cmd)

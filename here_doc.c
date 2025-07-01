@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:42:27 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 20:45:40 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 06:19:40 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,24 @@ int	heredoc_reader(const char *delimiter)
 	close(pipe_fds[1]);
 	return (pipe_fds[0]);
 }
+
+static void	handle_heredoc(t_command *cmd, t_token **token_ptr)
+{
+	t_redir	*new_redir;
+
+	new_redir = malloc(sizeof(t_redir));
+	if (!new_redir)
+		return ;
+	new_redir->type = (*token_ptr)->type;
+	new_redir->filename = NULL;
+	new_redir->next = NULL;
+	*token_ptr = (*token_ptr)->next;
+	if (*token_ptr && (*token_ptr)->type == TOKEN_WORD)
+		new_redir->heredoc_fd = heredoc_reader((*token_ptr)->value);
+	else
+	{
+		new_redir->heredoc_fd = -1;
+	}
+	redir_add_back(&(cmd->redirections), new_redir);
+}
+
