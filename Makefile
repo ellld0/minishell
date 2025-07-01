@@ -19,10 +19,9 @@ SRC =	main.c \
 		export.c \
 		unset.c \
 		here_doc.c \
-		status.c
+		status.c \
+		expander.c \
 		
-
-
 		
 LIBFT_DIR = ./libft
 

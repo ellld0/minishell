@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 09:41:15 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 09:08:06 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:03:10 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,11 @@ static t_command	*init_command(t_token *token_segment)
 	return (cmd);
 }
 
-t_command	*process_segment(t_token **token_ptr)
+static void	populate_command(t_command *cmd, t_token **token_ptr)
 {
-	t_command	*cmd;
-	int			i;
+	int		i;
+	char	*expanded_value;
 
-	cmd = init_command(*token_ptr);
-	if (!cmd)
-		return (NULL);
 	i = 0;
 	while (*token_ptr && (*token_ptr)->type != TOKEN_PIPE)
 	{
@@ -89,11 +86,23 @@ t_command	*process_segment(t_token **token_ptr)
 		}
 		else if ((*token_ptr)->type == TOKEN_WORD)
 		{
-			cmd->args[i++] = remove_quotes((*token_ptr)->value);
+			expanded_value = expand_status_variable((*token_ptr)->value);
+			cmd->args[i++] = remove_quotes(expanded_value);
+			free(expanded_value);
 			*token_ptr = (*token_ptr)->next;
 		}
 	}
 	cmd->args[i] = NULL;
+}
+
+static t_command	*process_segment(t_token **token_ptr)
+{
+	t_command	*cmd;
+
+	cmd = init_command(*token_ptr);
+	if (!cmd)
+		return (NULL);
+	populate_command(cmd, token_ptr);
 	return (cmd);
 }
 
