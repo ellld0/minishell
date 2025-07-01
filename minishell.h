@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 17:47:28 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:48:26 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ typedef struct s_command
 	t_redir				*redirections;
 	struct s_command	*next;
 }	t_command;
+
+typedef struct s_exp_state
+{
+	int		i;
+	int		j;
+	int		in_squote;
+}	t_exp_state;
 
 void		add_token_back(t_token **list, t_token *new_node);
 int			append_token(t_token **list, const char *line, int len,
@@ -107,5 +114,16 @@ int			*get_exit_status_ptr(void);
 void		set_exit_status(int status);
 char		*expand_variables(char *str);
 int			get_exit_status(void);
+void		copy_var_value(char *new_str, int *j, const char *old_str, int *i);
+char		*get_var_name(const char *str);
+int			get_var_expanded_len(const char *str, int *i);
+int			get_len_of_dollar_expansion(const char *str, int *i);
+int			get_expanded_len(const char *str);
+void		copy_status_value(char *new_str, int *j);
+void		copy_dollar_expansion(char *new_str, int *j,
+				const char *old_str, int *i);
+void		perform_expansion(char *new_str, const char *old_str);
+char		*expand_variables(char *str);
+void		process_expansion_char(char *new, const char *old, t_exp_state *s);
 
 #endif
