@@ -6,13 +6,13 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 09:48:42 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:26:43 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:54:31 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_pwd(void)
+int	do_pwd(void)
 {
 	char	*cwd;
 
@@ -20,13 +20,14 @@ void	do_pwd(void)
 	if (!cwd)
 	{
 		perror("pwd");
-		return ;
+		return (1);
 	}
 	printf("%s\n", cwd);
 	free(cwd);
+	return (0);
 }
 
-void	do_echo(char **args)
+int	do_echo(char **args)
 {
 	int	i;
 	int	newline_flag;
@@ -47,9 +48,10 @@ void	do_echo(char **args)
 	}
 	if (newline_flag)
 		printf("\n");
+	return (0);
 }
 
-void	do_cd(char **args)
+int	do_cd(char **args)
 {
 	char	*path;
 
@@ -60,13 +62,20 @@ void	do_cd(char **args)
 		if (!path)
 		{
 			write(2, "minishell: cd: HOME not set\n", 28);
-			return ;
+			return (1);
 		}
 	}
 	if (chdir(path) == -1)
-		perror("minishell: cd");
+	{
+		write(2, "minishell: cd: ", 15);
+		perror(path);
+		if (args[1] == NULL)
+			free(path);
+		return (1);
+	}
 	if (args[1] == NULL)
 		free(path);
+	return (0);
 }
 
 void	do_exit(char **args)

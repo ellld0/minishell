@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:08:21 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 09:08:30 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 09:14:32 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	handle_file_redirection(t_command *cmd, t_token *redir_token)
 		new_redir->filename = remove_quotes(filename_token->value);
 	else
 	{
-		// Syntax error: redirection with no file
 		new_redir->filename = NULL;
 	}
 	redir_add_back(&(cmd->redirections), new_redir);

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 10:19:28 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 09:01:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 09:14:53 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,15 @@ static int	handle_single_redir(t_redir *redir)
 	int	file_fd;
 	int	target_fd;
 
-	// Here-docs are now just a special kind of input file
 	if (redir->type == TOKEN_HEREDOC || redir->type == TOKEN_REDIR_IN)
 	{
 		target_fd = STDIN_FILENO;
 		file_fd = open(redir->filename, O_RDONLY);
 	}
-	else // For > and >>
+	else
 	{
 		target_fd = STDOUT_FILENO;
-		file_fd = open_redir_file(redir); // This helper already handles > vs >>
+		file_fd = open_redir_file(redir);
 	}
 	if (file_fd == -1)
 	{

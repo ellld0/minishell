@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 18:57:02 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:49:24 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:01:21 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ void	executor(t_command *cmd)
 	if (!cmd)
 		return ;
 	if (is_parent_builtin(cmd))
-		dispatch_builtin(cmd);
+	{
+		set_exit_status(dispatch_builtin(cmd));
+	}
 	else
 	{
 		execute_pipeline(cmd);

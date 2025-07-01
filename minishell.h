@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 09:06:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:54:40 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void		redir_add_back(t_redir **list, t_redir *new_redir);
 t_command	*parser(t_token *tokens);
 void		executor(t_command *cmd);
 char		*find_command_path(char *cmd);
-void		do_pwd(void);
-void		do_echo(char **args);
+int			do_pwd(void);
+int			do_echo(char **args);
 int			apply_redirections(t_command *cmd);
-void		do_cd(char **args);
+int			do_cd(char **args);
 void		do_exit(char **args);
 void		do_env(void);
 void		do_export(char **args);

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:53:43 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 14:10:18 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:00:25 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,16 @@ void	parent_pipe_handler(int *pipe_fds, int *prev_read_end,
 void	wait_for_children(int last_pid)
 {
 	int	status;
+	int	exit_code;
 
+	if (last_pid == -1)
+		return ;
 	waitpid(last_pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		exit_code = WEXITSTATUS(status);
+		set_exit_status(exit_code);
+	}
 	while (wait(NULL) > 0)
 		;
 }

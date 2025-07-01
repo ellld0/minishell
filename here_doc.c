@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:42:27 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 09:00:42 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:18:00 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ void	handle_heredoc(t_command *cmd, t_token *heredoc_token)
 	new_redir->next = NULL;
 	if (delimiter_token && delimiter_token->type == TOKEN_WORD)
 	{
-		// The reader now returns a filename string
 		new_redir->filename = heredoc_reader(delimiter_token->value);
 	}
 	else
 	{
-		new_redir->filename = NULL; // Syntax error
+		new_redir->filename = NULL;
 	}
 	redir_add_back(&(cmd->redirections), new_redir);
 }
-

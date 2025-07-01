@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:55:17 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 20:14:02 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:59:16 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,15 @@ int	is_builtin(char *cmd_name)
 
 int	dispatch_builtin(t_command *cmd)
 {
+	int	status;
+
+	status = 0;
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		do_echo(cmd->args);
+		status = do_echo(cmd->args);
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		do_pwd();
+		status = do_pwd();
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
-		do_cd(cmd->args);
+		status = do_cd(cmd->args);
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		do_exit(cmd->args);
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
