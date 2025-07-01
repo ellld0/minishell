@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 09:41:15 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 06:19:45 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 09:08:06 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,20 @@ t_command	*process_segment(t_token **token_ptr)
 	while (*token_ptr && (*token_ptr)->type != TOKEN_PIPE)
 	{
 		if ((*token_ptr)->type == TOKEN_HEREDOC)
-			handle_heredoc(cmd, token_ptr);
+		{
+			handle_heredoc(cmd, *token_ptr);
+			*token_ptr = (*token_ptr)->next->next;
+		}
 		else if ((*token_ptr)->type >= TOKEN_REDIR_IN)
-			handle_file_redirection(cmd, token_ptr);
+		{
+			handle_file_redirection(cmd, *token_ptr);
+			*token_ptr = (*token_ptr)->next->next;
+		}
 		else if ((*token_ptr)->type == TOKEN_WORD)
 		{
 			cmd->args[i++] = remove_quotes((*token_ptr)->value);
-		}
-		if (*token_ptr)
 			*token_ptr = (*token_ptr)->next;
+		}
 	}
 	cmd->args[i] = NULL;
 	return (cmd);

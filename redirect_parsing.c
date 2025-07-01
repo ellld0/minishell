@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:08:21 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 06:17:21 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 09:08:30 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,22 @@ void	redir_add_back(t_redir **list, t_redir *new_redir)
 	current->next = new_redir;
 }
 
-void	handle_file_redirection(t_command *cmd, t_token **token_ptr)
+void	handle_file_redirection(t_command *cmd, t_token *redir_token)
 {
 	t_redir	*new_redir;
+	t_token	*filename_token;
 
-	new_redir = malloc(sizeof(t_redir));
+	filename_token = redir_token->next;
+	new_redir = (t_redir *)malloc(sizeof(t_redir));
 	if (!new_redir)
 		return ;
-	new_redir->type = (*token_ptr)->type;
-	new_redir->heredoc_fd = -1;
+	new_redir->type = redir_token->type;
 	new_redir->next = NULL;
-	*token_ptr = (*token_ptr)->next;
-	if (*token_ptr && (*token_ptr)->type == TOKEN_WORD)
-		new_redir->filename = remove_quotes((*token_ptr)->value);
+	if (filename_token && filename_token->type == TOKEN_WORD)
+		new_redir->filename = remove_quotes(filename_token->value);
 	else
 	{
+		// Syntax error: redirection with no file
 		new_redir->filename = NULL;
 	}
 	redir_add_back(&(cmd->redirections), new_redir);

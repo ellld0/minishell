@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 06:18:23 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 09:06:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_redir
 {
 	char			*filename;
 	t_token_type	type;
-	int				heredoc_fd;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -98,8 +97,8 @@ char		*get_env_value(const char *name);
 t_list		*find_env_node(const char *name);
 void		set_env_var(const char *name, const char *value);
 void		do_unset(char **args);
-int			heredoc_reader(const char *delimiter);
-void		handle_file_redirection(t_command *cmd, t_token **token_ptr);
+char		*heredoc_reader(const char *delimiter);
+void		handle_file_redirection(t_command *cmd, t_token *redir_token);
 t_command	*process_segment(t_token **token_ptr);
-
+void		handle_heredoc(t_command *cmd, t_token *heredoc_token);
 #endif
