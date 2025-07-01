@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:53:47 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:17:25 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:47:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,20 @@ static int	get_clean_len(const char *str)
 	return (len);
 }
 
-char	*remove_quotes(const char *str)
+char	*remove_quotes(char *str)
 {
 	char	*clean_str;
 	int		i;
 	int		j;
 
+	if (!str)
+		return (NULL);
 	clean_str = malloc(sizeof(char) * (get_clean_len(str) + 1));
 	if (!clean_str)
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -87,5 +92,6 @@ char	*remove_quotes(const char *str)
 		}
 	}
 	clean_str[j] = '\0';
+	free(str);
 	return (clean_str);
 }

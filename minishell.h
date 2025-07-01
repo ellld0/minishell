@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 13:06:01 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:47:28 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		free_token_list(t_token *list);
 void		free_command_table(t_command *cmd_head);
 void		print_command_table(t_command *cmd_head);
 void		print_token_list(t_token *list);
-char		*remove_quotes(const char *str);
+char		*remove_quotes(char *str);
 void		redir_add_back(t_redir **list, t_redir *new_redir);
 t_command	*parser(t_token *tokens);
 void		executor(t_command *cmd);
@@ -105,7 +105,7 @@ int			is_valid_identifier(char *str);
 void		print_export(void);
 int			*get_exit_status_ptr(void);
 void		set_exit_status(int status);
-char		*expand_status_variable(char *str);
+char		*expand_variables(char *str);
 int			get_exit_status(void);
 
 #endif

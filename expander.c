@@ -6,10 +6,9 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:50:39 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 14:56:50 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:44:08 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -67,15 +66,17 @@ static int	get_len_of_dollar_expansion(const char *str, int *i)
 		(*i)++;
 	}
 	else
+	{
 		len = get_var_expanded_len(str, i);
+	}
 	return (len);
 }
 
 static int	get_expanded_len(const char *str)
 {
-	int	i;
-	int	len;
-	int	in_squote;
+	int		i;
+	int		len;
+	int		in_squote;
 
 	i = 0;
 	len = 0;
@@ -103,8 +104,7 @@ static void	copy_status_value(char *new_str, int *j)
 	free(status_str);
 }
 
-static void	copy_var_value(
-	char *new_str, int *j, const char *old_str, int *i)
+static void	copy_var_value(char *new_str, int *j, const char *old_str, int *i)
 {
 	char	*var_name;
 	char	*var_value;
@@ -143,7 +143,10 @@ static void	perform_expansion(char *new_str, const char *old_str)
 			in_squote = !in_squote;
 		}
 		else if (old_str[i] == '$' && old_str[i + 1] == '?' && !in_squote)
+		{
 			copy_status_value(new_str, &j);
+			i++;
+		}
 		else if (old_str[i] == '$' && !in_squote)
 			copy_var_value(new_str, &j, old_str, &i);
 		else
@@ -153,14 +156,13 @@ static void	perform_expansion(char *new_str, const char *old_str)
 	new_str[j] = '\0';
 }
 
-
 char	*expand_variables(char *str)
 {
 	char	*expanded_str;
 	int		expanded_len;
 
 	expanded_len = get_expanded_len(str);
-	expanded_str = malloc(sizeof(char) * (expanded_len + 1));
+	expanded_str = (char *)malloc(sizeof(char) * (expanded_len + 1));
 	if (!expanded_str)
 		return (NULL);
 	perform_expansion(expanded_str, str);

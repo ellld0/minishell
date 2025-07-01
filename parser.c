@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 09:41:15 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 13:04:48 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:51:38 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,22 @@ static t_command	*init_command(t_token *token_segment)
 
 static void	populate_command(t_command *cmd, t_token **token_ptr)
 {
-	int		i;
-	char	*expanded_value;
+	int			i;
+	char		*temp_str;
 
 	i = 0;
 	while (*token_ptr && (*token_ptr)->type != TOKEN_PIPE)
 	{
-		if ((*token_ptr)->type == TOKEN_HEREDOC)
+		if ((*token_ptr)->type >= TOKEN_REDIR_IN)
 		{
-			handle_heredoc(cmd, *token_ptr);
-			*token_ptr = (*token_ptr)->next->next;
-		}
-		else if ((*token_ptr)->type >= TOKEN_REDIR_IN)
-		{
-			handle_file_redirection(cmd, *token_ptr);
 			*token_ptr = (*token_ptr)->next->next;
 		}
 		else if ((*token_ptr)->type == TOKEN_WORD)
 		{
-			expanded_value = expand_status_variable((*token_ptr)->value);
-			cmd->args[i++] = remove_quotes(expanded_value);
-			free(expanded_value);
+			temp_str = ft_strdup((*token_ptr)->value);
+			temp_str = expand_variables(temp_str);
+			temp_str = remove_quotes(temp_str);
+			cmd->args[i++] = temp_str;
 			*token_ptr = (*token_ptr)->next;
 		}
 	}
