@@ -6,7 +6,7 @@
 #    By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 17:48:35 by sdavi-al          #+#    #+#              #
-#    Updated: 2025/06/30 15:20:04 by sdavi-al         ###   ########.fr        #
+#    Updated: 2025/07/01 13:08:18 by sdavi-al         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = ft_isalpha.c \
 	ft_bzero.c \
 	ft_memcpy.c \
 	ft_memmove.c \
+	ft_strcpy.c \
 	ft_strlcpy.c \
 	ft_strlcat.c \
 	ft_toupper.c \

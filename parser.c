@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 09:41:15 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 13:03:10 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:04:48 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	populate_command(t_command *cmd, t_token **token_ptr)
 	cmd->args[i] = NULL;
 }
 
-static t_command	*process_segment(t_token **token_ptr)
+t_command	*process_segment(t_token **token_ptr)
 {
 	t_command	*cmd;
 

@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   status.c                                           :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 10:48:25 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 13:05:21 by sdavi-al         ###   ########.fr       */
+/*   Created: 2025/07/01 13:08:30 by sdavi-al          #+#    #+#             */
+/*   Updated: 2025/07/01 13:08:57 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	*get_exit_status_ptr(void)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	static int	g_exit_status = 0;
+	int	i;
 
-	return (&g_exit_status);
-}
-
-void	set_exit_status(int status)
-{
-	int	*status_ptr;
-
-	status_ptr = get_exit_status_ptr();
-	*status_ptr = status;
-}
-
-int	get_exit_status(void)
-{
-	return (*(get_exit_status_ptr()));
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

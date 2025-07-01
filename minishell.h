@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 13:04:04 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:06:01 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ t_command	*process_segment(t_token **token_ptr);
 void		handle_heredoc(t_command *cmd, t_token *heredoc_token);
 int			is_valid_identifier(char *str);
 void		print_export(void);
+int			*get_exit_status_ptr(void);
 void		set_exit_status(int status);
 char		*expand_status_variable(char *str);
+int			get_exit_status(void);
 
 #endif
