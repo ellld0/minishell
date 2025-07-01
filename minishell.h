@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 10:54:40 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:18:47 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int			do_echo(char **args);
 int			apply_redirections(t_command *cmd);
 int			do_cd(char **args);
 void		do_exit(char **args);
-void		do_env(void);
-void		do_export(char **args);
+int			do_env(void);
+int			do_export(char **args);
 int			is_builtin(char *cmd_name);
 void		execute_builtin(t_command *cmd);
 void		execute_single_command(t_command *cmd, char **envp);
@@ -96,9 +96,13 @@ void		free_env(void);
 char		*get_env_value(const char *name);
 t_list		*find_env_node(const char *name);
 void		set_env_var(const char *name, const char *value);
-void		do_unset(char **args);
+int			do_unset(char **args);
 char		*heredoc_reader(const char *delimiter);
 void		handle_file_redirection(t_command *cmd, t_token *redir_token);
 t_command	*process_segment(t_token **token_ptr);
 void		handle_heredoc(t_command *cmd, t_token *heredoc_token);
+int			is_valid_identifier(char *str);
+void		print_export(void);
+void		set_exit_status(int status);
+
 #endif

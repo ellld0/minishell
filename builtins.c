@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 09:48:42 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 10:54:31 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:09:12 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	do_exit(char **args)
 	exit(0);
 }
 
-void	do_env(void)
+int	do_env(void)
 {
 	t_list	*current;
 
@@ -106,4 +106,5 @@ void	do_env(void)
 		printf("%s\n", (char *)current->content);
 		current = current->next;
 	}
+	return (0);
 }

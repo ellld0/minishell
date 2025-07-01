@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:13:37 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 20:12:39 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:15:11 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	unset_env_var(const char *name)
 	}
 }
 
-static int	is_valid_identifier(char *str)
+int	is_valid_identifier(char *str)
 {
 	int	i;
 
@@ -58,16 +58,19 @@ static int	is_valid_identifier(char *str)
 	return (1);
 }
 
-void	do_unset(char **args)
+int	do_unset(char **args)
 {
 	int	i;
+	int	exit_status;
 
 	i = 1;
+	exit_status = 0;
 	while (args[i])
 	{
 		if (!is_valid_identifier(args[i]))
 		{
 			printf("minishell: unset: `%s': not a valid identifier\n", args[i]);
+			exit_status = 1;
 		}
 		else
 		{
@@ -75,4 +78,5 @@ void	do_unset(char **args)
 		}
 		i++;
 	}
+	return (exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:29:14 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/30 15:37:04 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:18:34 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	set_env_var(const char *name, const char *value)
 	}
 }
 
-static void	print_export(void)
+void	print_export(void)
 {
 	t_list	*current;
 	char	*var;
@@ -81,28 +81,51 @@ static void	print_export(void)
 	}
 }
 
-void	do_export(char **args)
+static int	process_export_arg(char *arg)
 {
-	int		i;
 	char	*eq_pos;
-	char	*name;
 
+	eq_pos = ft_strchr(arg, '=');
+	if (eq_pos != NULL)
+	{
+		*eq_pos = '\0';
+		if (!is_valid_identifier(arg))
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", arg);
+			*eq_pos = '=';
+			return (1);
+		}
+		set_env_var(arg, eq_pos + 1);
+		*eq_pos = '=';
+	}
+	else
+	{
+		if (!is_valid_identifier(arg))
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", arg);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	do_export(char **args)
+{
+	int	i;
+	int	exit_status;
+
+	exit_status = 0;
 	if (args[1] == NULL)
 	{
 		print_export();
-		return ;
+		return (0);
 	}
 	i = 1;
 	while (args[i])
 	{
-		eq_pos = ft_strchr(args[i], '=');
-		if (eq_pos)
-		{
-			*eq_pos = '\0';
-			name = args[i];
-			set_env_var(name, eq_pos + 1);
-			*eq_pos = '=';
-		}
+		if (process_export_arg(args[i]) != 0)
+			exit_status = 1;
 		i++;
 	}
+	return (exit_status);
 }
