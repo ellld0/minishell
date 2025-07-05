@@ -6,98 +6,47 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:38:24 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/06/29 19:16:41 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:21:05 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_token_back(t_token **list, t_token *new_node)
+static int	process_next_token(t_token **list_head, const char *line, int *i)
 {
-	t_token	*current;
+	int	len;
 
-	if (!list || !new_node)
-		return ;
-	if (*list == NULL)
+	if (is_whitespace(line[*i]))
 	{
-		*list = new_node;
-		return ;
-	}
-	current = *list;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new_node;
-}
-
-int	append_token(t_token **list, const char *line, int len,
-		t_token_type type)
-{
-	t_token	*new_node;
-	char	*value;
-	int		i;
-
-	value = malloc(sizeof(char) * (len + 1));
-	if (!value)
-		return (0);
-	i = 0;
-	while (i < len)
-	{
-		value[i] = line[i];
-		i++;
-	}
-	value[i] = '\0';
-	new_node = malloc(sizeof(t_token));
-	if (!new_node)
-	{
-		free(value);
+		(*i)++;
 		return (0);
 	}
-	new_node->value = value;
-	new_node->type = type;
-	new_node->next = NULL;
-	add_token_back(list, new_node);
-	return (len);
-}
-
-int	handle_operator_token(t_token **token_list, const char *line)
-{
-	if (line[0] == '<' && line[1] == '<')
-		return (append_token(token_list, line, 2, TOKEN_HEREDOC));
-	if (line[0] == '>' && line[1] == '>')
-		return (append_token(token_list, line, 2, TOKEN_REDIR_APPEND));
-	if (line[0] == '<')
-		return (append_token(token_list, line, 1, TOKEN_REDIR_IN));
-	if (line[0] == '>')
-		return (append_token(token_list, line, 1, TOKEN_REDIR_OUT));
-	if (line[0] == '|')
-		return (append_token(token_list, line, 1, TOKEN_PIPE));
+	if (is_operator(line[*i]))
+		len = handle_operator_token(list_head, &line[*i]);
+	else
+		len = handle_word_token(list_head, &line[*i]);
+	if (len < 0)
+		return (-1);
+	*i += len;
 	return (0);
 }
 
-t_token	*main_lexer(char *line)
+t_token	*main_lexer(const char *line)
 {
-	t_token	*token_list;
+	t_token	*list_head;
 	int		i;
-	int		consumed;
 
-	token_list = NULL;
+	list_head = NULL;
+	if (!line)
+		return (NULL);
 	i = 0;
 	while (line[i])
 	{
-		consumed = 0;
-		if (is_whitespace(line[i]))
+		if (process_next_token(&list_head, line, &i) == -1)
 		{
-			i++;
-			continue ;
+			free_token_list(list_head);
+			return (NULL);
 		}
-		else if (is_operator(line[i]))
-			consumed = handle_operator_token(&token_list, &line[i]);
-		else
-			consumed = handle_word_token(&token_list, &line[i]);
-		if (consumed == 0 && line[i])
-			i++;
-		else
-			i += consumed;
 	}
-	return (token_list);
+	return (list_head);
 }

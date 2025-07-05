@@ -2,25 +2,11 @@ NAME = minishell
 
 SRC =	main.c \
 		lexer.c \
-		handle_word_token.c \
+		handle_tokens.c \
 		utils.c \
 		cleanup.c \
 		debug.c \
-		quote_removal.c \
-		parser.c \
-		redirect_parsing.c \
-		path_finder.c \
-		executor.c \
-		executor_utils.c \
-		builtins.c \
-		redirections.c \
-		exec_builtins.c \
-		environment.c \
-		export.c \
-		unset.c \
-		here_doc.c \
-		status.c \
-		expander.c \
+		
 		
 		
 LIBFT_DIR = ./libft
