@@ -3,6 +3,7 @@ NAME = minishell
 SRC =	main.c \
 		lexer.c \
 		handle_tokens.c \
+		handle_operator_token.c \
 		utils.c \
 		cleanup.c \
 		debug.c \

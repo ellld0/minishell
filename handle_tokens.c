@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:16:13 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/04 20:26:31 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:14:44 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,53 +47,38 @@ void	add_token_back(t_token **list_head, t_token *new_token)
 	current->next = new_token;
 }
 
-int	handle_operator_token(t_token **list, const char *line)
+static int	skip_quoted_part(const char *line, int i)
 {
-	if (line[1] == line[0])
+	char	quote_char;
+
+	quote_char = line[i];
+	i++;
+	while (line[i])
 	{
-		if (line[0] == '<')
-			return (add_token_back(list, create_token("<<", TOKEN_HEREDOC)), 2);
-		if (line[0] == '>')
-			return (add_token_back(list, create_token(">>", TOKEN_REDIR_APPEND))
-				, 2);
-		if (line[0] == '&')
-			return (add_token_back(list, create_token("&&", TOKEN_AND)), 2);
-		if (line[0] == '|')
-			return (add_token_back(list, create_token("||", TOKEN_OR)), 2);
+		if (line[i] == quote_char)
+			break ;
+		if (quote_char == '\"' && line[i] == '\\' && line[i + 1])
+			i += 2;
+		else
+			i++;
 	}
-	if (line[0] == '|')
-		return (add_token_back(list, create_token("|", TOKEN_PIPE)), 1);
-	if (line[0] == '<')
-		return (add_token_back(list, create_token("<", TOKEN_REDIR_IN)), 1);
-	if (line[0] == '>')
-		return (add_token_back(list, create_token(">", TOKEN_REDIR_OUT)), 1);
-	if (line[0] == '(')
-		return (add_token_back(list, create_token("(", TOKEN_LPAREN)), 1);
-	if (line[0] == ')')
-		return (add_token_back(list, create_token(")", TOKEN_RPAREN)), 1);
-	return (0);
+	if (line[i] != quote_char)
+		return (printf("minishell: syntax error: unclosed quote\n"), -1);
+	return (i + 1);
 }
 
 static int	get_word_len(const char *line)
 {
-	int		i;
-	char	quote_char;
+	int	i;
 
 	i = 0;
 	while (line[i] && !is_whitespace(line[i]) && !is_operator(line[i]))
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
-			quote_char = line[i];
-			i++;
-			while (line[i] && line[i] != quote_char)
-				i++;
-			if (line[i] == '\0')
-			{
-				printf("minishell: syntax error: unclosed quote\n");
+			i = skip_quoted_part(line, i);
+			if (i == -1)
 				return (-1);
-			}
-			i++;
 		}
 		else if (line[i] == '\\' && line[i + 1])
 			i += 2;
