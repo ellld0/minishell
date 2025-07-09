@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/04 17:50:14 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:30:54 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -60,7 +62,7 @@ typedef struct s_redir
 
 typedef struct s_cmd_node
 {
-	char	**args;
+	char	**argv;
 	t_redir	*redirections;
 }	t_cmd_node;
 
@@ -80,6 +82,11 @@ struct s_ast_node
 	} u_as;
 };
 
+typedef struct s_parser
+{
+	t_token	*current_token;
+}	t_parser;
+
 int			is_whitespace(char c);
 int			is_operator(char c);
 t_token		*create_token(char *value, t_token_type type);
@@ -89,5 +96,16 @@ int			handle_word_token(t_token **list, const char *line);
 t_token		*main_lexer(const char *line);
 void		free_token_list(t_token *list_head);
 void		print_token_list(t_token *list);
+t_ast_node	*create_ast_node(t_node_type type);
+t_redir		*create_redir(t_token_type type, char *filename);
+void		add_redir_to_node(t_ast_node *node, t_redir *redir);
+void		next_token(t_parser *parser);
+t_ast_node	*parse_logical_op(t_parser *parser);
+t_ast_node	*parse_pipe(t_parser *parser);
+t_ast_node	*parse_simple_cmd(t_parser *parser);
+t_ast_node	*build_ast(t_token *tokens);
+void		print_ast(t_ast_node *root);
+int			handle_redirection(t_parser *parser, t_ast_node *node);
+void		populate_argv(t_ast_node *node, char **argv_list, int argc);
 
 #endif
