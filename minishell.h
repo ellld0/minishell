@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/10 14:47:14 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:44:58 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,13 @@ typedef struct s_parser
 {
 	t_token	*current_token;
 }	t_parser;
+
+typedef struct s_quote_state
+{
+	char	quote_char;
+	int		i;
+	int		j;
+}	t_quote_state;
 
 int			is_whitespace(char c);
 int			is_operator(char c);
