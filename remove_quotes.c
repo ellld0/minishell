@@ -6,28 +6,35 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 15:22:42 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 11:45:23 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:58:25 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_quote_character(const char *src, char *dest,
-		t_quote_state *s)
+static void	process_char(const char *src, char *dest, t_quote_state *s)
 {
-	if (s->quote_char == 0)
+	if (src[s->i] == '\\' && s->quote_char != '\'')
 	{
-		s->quote_char = src[s->i];
+		if (src[s->i + 1])
+		{
+			s->i++;
+			dest[s->j++] = src[s->i];
+		}
+		else
+			dest[s->j++] = src[s->i];
 	}
-	else if (s->quote_char == src[s->i])
+	else if (src[s->i] == '\'' || src[s->i] == '\"')
 	{
-		s->quote_char = 0;
+		if (s->quote_char == 0)
+			s->quote_char = src[s->i];
+		else if (s->quote_char == src[s->i])
+			s->quote_char = 0;
+		else
+			dest[s->j++] = src[s->i];
 	}
 	else
-	{
-		dest[s->j] = src[s->i];
-		s->j++;
-	}
+		dest[s->j++] = src[s->i];
 }
 
 char	*remove_quotes(char *str)
@@ -45,13 +52,7 @@ char	*remove_quotes(char *str)
 	state.j = 0;
 	while (str[state.i])
 	{
-		if (str[state.i] == '\'' || str[state.i] == '\"')
-			handle_quote_character(str, new_str, &state);
-		else
-		{
-			new_str[state.j] = str[state.i];
-			state.j++;
-		}
+		process_char(str, new_str, &state);
 		state.i++;
 	}
 	new_str[state.j] = '\0';
