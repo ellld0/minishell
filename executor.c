@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/10 14:33:07 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:23:02 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,26 @@ static int	execute_pipe_node(t_ast_node *node);
 
 int	execute_ast(t_ast_node *node)
 {
+	int	status;
+
 	if (!node)
 		return (0);
 	if (node->type == NODE_COMMAND)
 		return (execute_command_node(node));
 	if (node->type == NODE_PIPE)
 		return (execute_pipe_node(node));
+	status = execute_ast(node->u_as.operator.left);
 	if (node->type == NODE_AND)
 	{
-		if (execute_ast(node->u_as.operator.left) == 0)
+		if (status == 0)
 			return (execute_ast(node->u_as.operator.right));
+		return (status);
 	}
 	if (node->type == NODE_OR)
 	{
-		if (execute_ast(node->u_as.operator.left) != 0)
+		if (status != 0)
 			return (execute_ast(node->u_as.operator.right));
+		return (status);
 	}
 	return (1);
 }
@@ -72,7 +77,7 @@ static int	execute_command_node(t_ast_node *node)
 			ft_putendl_fd(node->u_as.command.argv[0], 2);
 			exit(127);
 		}
-		execve(cmd_path, node->u_as.command.argv, NULL); // Note: env needs to be passed
+		execve(cmd_path, node->u_as.command.argv, NULL);
 		perror("execve");
 		free(cmd_path);
 		exit(126);
@@ -116,5 +121,7 @@ static int	execute_pipe_node(t_ast_node *node)
 	close(pipefd[1]);
 	waitpid(left_pid, NULL, 0);
 	waitpid(right_pid, &status, 0);
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }
