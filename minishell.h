@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/09 12:30:54 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:47:14 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int			handle_operator_token(t_token **list, const char *line);
 int			handle_word_token(t_token **list, const char *line);
 t_token		*main_lexer(const char *line);
 void		free_token_list(t_token *list_head);
+void		free_ast(t_ast_node *node);
 void		print_token_list(t_token *list);
 t_ast_node	*create_ast_node(t_node_type type);
 t_redir		*create_redir(t_token_type type, char *filename);
@@ -107,5 +108,9 @@ t_ast_node	*build_ast(t_token *tokens);
 void		print_ast(t_ast_node *root);
 int			handle_redirection(t_parser *parser, t_ast_node *node);
 void		populate_argv(t_ast_node *node, char **argv_list, int argc);
+char		*remove_quotes(char *str);
+int			execute_ast(t_ast_node *node);
+char		*find_command_path(char *cmd);
+int			apply_redirections(t_cmd_node *cmd);
 
 #endif

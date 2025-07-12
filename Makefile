@@ -10,8 +10,12 @@ SRC =   main.c \
        build_ast.c \
        utils_build_ast.c \
        ast_debugger.c \
-       parse_command.c
-		
+       parse_command.c \
+       remove_quotes.c \
+       executor.c \
+       path_finder.c \
+       handle_redirections.c \
+
 		
 LIBFT_DIR = ./libft
 

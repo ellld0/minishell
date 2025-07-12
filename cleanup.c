@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:48:23 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/04 16:00:13 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:46:34 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,52 @@ void	free_token_list(t_token *list_head)
 		free(current);
 		current = next_node;
 	}
+}
+
+static void	free_redir_list(t_redir *redir)
+{
+	t_redir	*current;
+	t_redir	*next_node;
+
+	current = redir;
+	while (current)
+	{
+		next_node = current->next;
+		free(current->filename);
+		free(current);
+		current = next_node;
+	}
+}
+
+static void	free_argv(char **argv)
+{
+	int	i;
+
+	if (!argv)
+		return ;
+	i = 0;
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
+}
+
+void	free_ast(t_ast_node *node)
+{
+	if (!node)
+		return ;
+	if (node->type == NODE_COMMAND)
+	{
+		free_argv(node->u_as.command.argv);
+		if (node->u_as.command.redirections)
+			free_redir_list(node->u_as.command.redirections);
+	}
+	else
+	{
+		free_ast(node->u_as.operator.left);
+		free_ast(node->u_as.operator.right);
+	}
+	free(node);
 }
