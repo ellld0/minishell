@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 13:16:19 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 13:22:57 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:09:58 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*search_in_paths(char *cmd, char **paths)
 	return (NULL);
 }
 
-static char	*find_command_path(char *cmd)
+char	*find_command_path(char *cmd)
 {
 	char	**paths;
 	char	*full_path;

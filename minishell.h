@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 12:50:16 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:02:47 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ char		*remove_quotes(char *str);
 int			execute_ast(t_ast_node *node);
 char		*find_command_path(char *cmd);
 int			apply_redirections(t_cmd_node *cmd);
+int			execute_pipe_node(t_ast_node *node);
 
 #endif
