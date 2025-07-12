@@ -6,7 +6,7 @@
 #    By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 17:48:35 by sdavi-al          #+#    #+#              #
-#    Updated: 2025/07/01 13:08:18 by sdavi-al         ###   ########.fr        #
+#    Updated: 2025/07/12 17:35:35 by sdavi-al         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,8 @@ SRCS = ft_isalpha.c \
 	ft_lstdelone.c \
 	ft_lstclear.c \
 	ft_lstiter.c \
-	ft_lstmap.c
+	ft_lstmap.c \
+	ft_lstsort.c
 
 # SRCS = $(shell find -name "*.c")
 

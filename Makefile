@@ -16,7 +16,10 @@ SRC =   main.c \
        path_finder.c \
        handle_redirections.c \
        execute_pipe.c \
-       env.c
+       env.c \
+       wildcard.c \
+       wildcard_expansion.c \
+
 		
 LIBFT_DIR = ./libft
 

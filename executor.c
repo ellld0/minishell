@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 16:11:03 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:50:23 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	execute_command_node(t_shell *shell, t_ast_node *node)
 {
 	pid_t	pid;
 
+	expand_wildcards(node);
 	if (!node->u_as.command.argv || !node->u_as.command.argv[0])
 		return (0);
 	pid = fork();

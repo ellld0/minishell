@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:54:58 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/01 13:09:29 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:37:24 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int			ft_printf(const char *str, ...);
 int			ft_printnbr_unsigned(unsigned int n);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strcpy(char *dest, const char *src);
+void		ft_lstsort(t_list *lst, int (*cmp)());
 
 #endif

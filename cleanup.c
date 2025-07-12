@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:48:23 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/10 14:46:34 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:23:14 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	free_redir_list(t_redir *redir)
 	}
 }
 
-static void	free_argv(char **argv)
+void	free_argv(char **argv)
 {
 	int	i;
 

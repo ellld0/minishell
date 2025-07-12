@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 16:09:13 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:23:22 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,9 @@ int			is_operator(char c);
 /* debug.c & ast_debugger.c */
 void		print_token_list(t_token *list);
 void		print_ast(t_ast_node *root);
+
+int			match(const char *pattern, const char *s);
+
+void		free_argv(char **argv);
 
 #endif
