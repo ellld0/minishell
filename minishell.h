@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 14:02:47 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:09:13 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 # include <fcntl.h>
 # include "libft.h"
 
+/* Main Shell Struct */
+typedef struct s_shell
+{
+	char	**env;
+	int		last_exit_status;
+}	t_shell;
+
+/* Tokenizer (Lexer) */
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -43,6 +51,7 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+/* Parser (AST) */
 typedef enum e_node_type
 {
 	NODE_COMMAND,
@@ -94,31 +103,56 @@ typedef struct s_quote_state
 	int		j;
 }	t_quote_state;
 
-int			is_whitespace(char c);
-int			is_operator(char c);
-t_token		*create_token(char *value, t_token_type type);
-void		add_token_back(t_token **list_head, t_token *new_token);
+/* Function Prototypes */
+
+/* env.c */
+int			init_shell_env(t_shell *shell, char **envp);
+void		free_shell_env(t_shell *shell);
+
+/* lexer.c & handle_tokens.c & handle_operator_token.c */
+t_token		*main_lexer(const char *line);
 int			handle_operator_token(t_token **list, const char *line);
 int			handle_word_token(t_token **list, const char *line);
-t_token		*main_lexer(const char *line);
-void		free_token_list(t_token *list_head);
-void		free_ast(t_ast_node *node);
-void		print_token_list(t_token *list);
+t_token		*create_token(char *value, t_token_type type);
+void		add_token_back(t_token **list_head, t_token *new_token);
+
+/* build_ast.c & parse_command.c */
+t_ast_node	*build_ast(t_token *tokens);
+t_ast_node	*parse_logical_op(t_parser *parser);
+t_ast_node	*parse_pipe(t_parser *parser);
+t_ast_node	*parse_simple_cmd(t_parser *parser);
+int			handle_redirection(t_parser *parser, t_ast_node *node);
+
+/* utils_build_ast.c */
 t_ast_node	*create_ast_node(t_node_type type);
 t_redir		*create_redir(t_token_type type, char *filename);
 void		add_redir_to_node(t_ast_node *node, t_redir *redir);
 void		next_token(t_parser *parser);
-t_ast_node	*parse_logical_op(t_parser *parser);
-t_ast_node	*parse_pipe(t_parser *parser);
-t_ast_node	*parse_simple_cmd(t_parser *parser);
-t_ast_node	*build_ast(t_token *tokens);
-void		print_ast(t_ast_node *root);
-int			handle_redirection(t_parser *parser, t_ast_node *node);
-void		populate_argv(t_ast_node *node, char **argv_list, int argc);
-char		*remove_quotes(char *str);
-int			execute_ast(t_ast_node *node);
-char		*find_command_path(char *cmd);
+
+/* executor.c & execute_command.c & execute_pipe.c */
+int			execute_ast(t_shell *shell, t_ast_node *node);
+int			execute_command_node(t_shell *shell, t_ast_node *node);
+int			execute_pipe_node(t_shell *shell, t_ast_node *node);
+
+/* handle_redirections.c */
 int			apply_redirections(t_cmd_node *cmd);
-int			execute_pipe_node(t_ast_node *node);
+
+/* path_finder.c */
+char		*find_command_path(char *cmd);
+
+/* remove_quotes.c */
+char		*remove_quotes(char *str);
+
+/* cleanup.c */
+void		free_token_list(t_token *list_head);
+void		free_ast(t_ast_node *node);
+
+/* utils.c */
+int			is_whitespace(char c);
+int			is_operator(char c);
+
+/* debug.c & ast_debugger.c */
+void		print_token_list(t_token *list);
+void		print_ast(t_ast_node *root);
 
 #endif

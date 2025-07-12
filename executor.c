@@ -6,27 +6,13 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 14:08:15 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:11:03 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* executor.c                                         :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/07/09 16:00:00 by sdavi-al          #+#    #+#             */
-/* Updated: 2025/07/09 16:00:00 by sdavi-al         ###   ########.fr       */
-/* */
-/* ************************************************************************** */
-
-#include "minishell.h"
-
-static void	child_process_execution(t_ast_node *node)
+static void	child_process_execution(t_shell *shell, t_ast_node *node)
 {
 	char	*cmd_path;
 
@@ -39,7 +25,7 @@ static void	child_process_execution(t_ast_node *node)
 		ft_putendl_fd(node->u_as.command.argv[0], 2);
 		exit(127);
 	}
-	execve(cmd_path, node->u_as.command.argv, NULL);
+	execve(cmd_path, node->u_as.command.argv, shell->env);
 	perror("execve");
 	free(cmd_path);
 	exit(126);
@@ -55,7 +41,7 @@ static int	parent_process_wait(pid_t pid)
 	return (1);
 }
 
-int	execute_command_node(t_ast_node *node)
+int	execute_command_node(t_shell *shell, t_ast_node *node)
 {
 	pid_t	pid;
 
@@ -65,31 +51,31 @@ int	execute_command_node(t_ast_node *node)
 	if (pid == -1)
 		return (perror("fork"), 1);
 	if (pid == 0)
-		child_process_execution(node);
+		child_process_execution(shell, node);
 	return (parent_process_wait(pid));
 }
 
-int	execute_ast(t_ast_node *node)
+int	execute_ast(t_shell *shell, t_ast_node *node)
 {
 	int	status;
 
 	if (!node)
 		return (0);
 	if (node->type == NODE_COMMAND)
-		return (execute_command_node(node));
+		return (execute_command_node(shell, node));
 	if (node->type == NODE_PIPE)
-		return (execute_pipe_node(node));
-	status = execute_ast(node->u_as.operator.left);
+		return (execute_pipe_node(shell, node));
+	status = execute_ast(shell, node->u_as.operator.left);
 	if (node->type == NODE_AND)
 	{
 		if (status == 0)
-			return (execute_ast(node->u_as.operator.right));
+			return (execute_ast(shell, node->u_as.operator.right));
 		return (status);
 	}
 	if (node->type == NODE_OR)
 	{
 		if (status != 0)
-			return (execute_ast(node->u_as.operator.right));
+			return (execute_ast(shell, node->u_as.operator.right));
 		return (status);
 	}
 	return (1);

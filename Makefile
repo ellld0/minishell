@@ -16,8 +16,7 @@ SRC =   main.c \
        path_finder.c \
        handle_redirections.c \
        execute_pipe.c \
-       
-
+       env.c
 		
 LIBFT_DIR = ./libft
 
