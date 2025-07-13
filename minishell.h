@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 14:16:14 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:14:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+#include <signal.h>
 # include "libft.h"
 
 /* Main Shell Struct */
@@ -164,5 +165,9 @@ void		expand_wildcards(t_ast_node *node);
 char		*expand_env_vars(t_shell *shell, const char *line);
 char		*get_env_value(char **env, const char *var_name);
 char		*get_var_name(const char *str);
+
+void		setup_interactive_mode_signals(void);
+void		setup_execution_mode_signals(void);
+void		reset_child_signals(void);
 
 #endif

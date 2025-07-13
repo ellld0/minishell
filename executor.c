@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 17:50:23 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:17:56 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	child_process_execution(t_shell *shell, t_ast_node *node)
 {
 	char	*cmd_path;
 
+	reset_child_signals();
 	if (apply_redirections(&node->u_as.command) != 0)
 		exit(1);
 	cmd_path = find_command_path(node->u_as.command.argv[0]);
@@ -35,7 +36,17 @@ static int	parent_process_wait(pid_t pid)
 {
 	int	status;
 
+	setup_execution_mode_signals();
 	waitpid(pid, &status, 0);
+	setup_interactive_mode_signals();
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit: 3", 2);
+		else if (WTERMSIG(status) == SIGINT)
+			ft_putendl_fd("", 2);
+		return (128 + WTERMSIG(status));
+	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 14:02:30 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 15:55:06 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:41:29 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,18 @@ static int	wait_for_pipeline(pid_t left_pid, pid_t right_pid)
 {
 	int	status;
 
+	setup_execution_mode_signals();
 	waitpid(left_pid, NULL, 0);
 	waitpid(right_pid, &status, 0);
+	setup_interactive_mode_signals();
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit: 3", 2);
+		else if (WTERMSIG(status) == SIGINT)
+			ft_putendl_fd("", 2);
+		return (128 + WTERMSIG(status));
+	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);

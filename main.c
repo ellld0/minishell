@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 14:03:37 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:15:48 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	ft_bzero(&shell, sizeof(t_shell));
+	setup_interactive_mode_signals();
 	if (init_shell_env(&shell, envp) != 0)
 	{
 		ft_putendl_fd("minishell: environment initialization failed", 2);
