@@ -19,7 +19,9 @@ SRC =   main.c \
        env.c \
        wildcard.c \
        wildcard_expansion.c \
-
+       env_utils.c \
+       env_expansion.c \
+       
 		
 LIBFT_DIR = ./libft
 

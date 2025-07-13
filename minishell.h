@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 17:23:22 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 14:16:14 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,11 @@ void		print_ast(t_ast_node *root);
 int			match(const char *pattern, const char *s);
 
 void		free_argv(char **argv);
+
+void		expand_wildcards(t_ast_node *node);
+
+char		*expand_env_vars(t_shell *shell, const char *line);
+char		*get_env_value(char **env, const char *var_name);
+char		*get_var_name(const char *str);
 
 #endif
