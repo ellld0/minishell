@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 15:17:56 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:22:20 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	execute_command_node(t_shell *shell, t_ast_node *node)
 	expand_wildcards(node);
 	if (!node->u_as.command.argv || !node->u_as.command.argv[0])
 		return (0);
+	if (is_builtin(node->u_as.command.argv[0]))
+		return (execute_builtin(shell, node->u_as.command.argv));
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), 1);

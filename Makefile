@@ -1,27 +1,31 @@
 NAME = minishell
 
-SRC =   main.c \
-       lexer.c \
-       handle_tokens.c \
-       handle_operator_token.c \
-       utils.c \
-       cleanup.c \
-       debug.c \
-       build_ast.c \
-       utils_build_ast.c \
-       ast_debugger.c \
-       parse_command.c \
-       remove_quotes.c \
-       executor.c \
-       path_finder.c \
-       handle_redirections.c \
-       execute_pipe.c \
-       env.c \
-       wildcard.c \
-       wildcard_expansion.c \
-       env_utils.c \
-       env_expansion.c \
-       
+SRC =   ast_debugger.c \
+        build_ast.c \
+        cleanup.c \
+        debug.c \
+        env.c \
+        env_expansion.c \
+        env_utils.c \
+        execute_pipe.c \
+        executor.c \
+        handle_operator_token.c \
+        handle_redirections.c \
+        handle_tokens.c \
+        lexer.c \
+        main.c \
+        parse_command.c \
+        path_finder.c \
+        remove_quotes.c \
+        signals.c \
+        utils.c \
+        utils_build_ast.c \
+        wildcard.c \
+        wildcard_expansion.c  \
+        builtins.c \
+        builtin_dispatcher.c \
+        
+
 		
 LIBFT_DIR = ./libft
 

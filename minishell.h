@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 15:14:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:24:58 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-#include <signal.h>
+# include <signal.h>
 # include "libft.h"
 
 /* Main Shell Struct */
@@ -169,5 +169,12 @@ char		*get_var_name(const char *str);
 void		setup_interactive_mode_signals(void);
 void		setup_execution_mode_signals(void);
 void		reset_child_signals(void);
+
+int			builtin_pwd(void);
+int			builtin_env(t_shell *shell);
+int			builtin_echo(char **argv);
+int			is_builtin(const char *cmd);
+int			execute_builtin(t_shell *shell, char **argv);
+int			builtin_cd(t_shell *shell, char **argv);
 
 #endif
