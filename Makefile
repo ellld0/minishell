@@ -26,9 +26,8 @@ SRC =   ast_debugger.c \
         builtin_dispatcher.c \
         env_management.c \
         builtins2.c \
-        syntax_error.c
-
-
+        syntax_error.c \
+        parse_parentheses.c
 		
 LIBFT_DIR = ./libft
 

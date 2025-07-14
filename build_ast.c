@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:23:11 by gabriel           #+#    #+#             */
-/*   Updated: 2025/07/14 15:03:06 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:35:56 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_ast_node	*parse_pipe(t_parser *parser)
 	t_ast_node	*left;
 	t_ast_node	*pipe_node;
 
-	left = parse_simple_cmd(parser);
+	left = parse_primary(parser);
 	if (!left)
 		return (NULL);
 	while (parser->current_token && parser->current_token->type == TOKEN_PIPE)
@@ -64,12 +64,13 @@ t_ast_node	*parse_pipe(t_parser *parser)
 		next_token(parser);
 		if (!parser->current_token)
 			return (syntax_error(NULL), free_ast(left), NULL);
-		if (parser->current_token->type != TOKEN_WORD)
+		if (parser->current_token->type != TOKEN_WORD
+			&& parser->current_token->type != TOKEN_LPAREN)
 			return (syntax_error(parser->current_token->value),
 				free_ast(left), NULL);
 		pipe_node = create_ast_node(NODE_PIPE);
 		pipe_node->u_as.operator.left = left;
-		pipe_node->u_as.operator.right = parse_simple_cmd(parser);
+		pipe_node->u_as.operator.right = parse_primary(parser);
 		if (!pipe_node->u_as.operator.right)
 			return (free_ast(pipe_node), NULL);
 		left = pipe_node;

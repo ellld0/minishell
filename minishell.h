@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 15:20:58 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:33:29 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@
 # include <signal.h>
 # include "libft.h"
 
-/* Main Shell Struct */
 typedef struct s_shell
 {
 	char	**env;
 	int		last_exit_status;
 }	t_shell;
 
-/* Tokenizer (Lexer) */
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -52,7 +50,6 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-/* Parser (AST) */
 typedef enum e_node_type
 {
 	NODE_COMMAND,
@@ -185,5 +182,6 @@ void		add_or_update_env_var(t_shell *shell, char *new_var);
 void		remove_env_var(t_shell *shell, const char *var_name);
 int			syntax_error(const char *token);
 int			is_state_changing_builtin(const char *cmd);
+t_ast_node	*parse_primary(t_parser *parser);
 
 #endif
