@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:19:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 16:20:39 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:09:53 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,13 @@ int	execute_builtin(t_shell *shell, char **argv)
 		return (builtin_pwd());
 	if (ft_strcmp(argv[0], "env") == 0)
 		return (builtin_env(shell));
+	if (ft_strcmp(argv[0], "cd") == 0)
+		return (builtin_cd(shell, argv));
+	if (ft_strcmp(argv[0], "exit") == 0)
+		return (builtin_exit(shell, argv));
+	if (ft_strcmp(argv[0], "export") == 0)
+		return (builtin_export(shell, argv));
+	if (ft_strcmp(argv[0], "unset") == 0)
+		return (builtin_unset(shell, argv));
 	return (1);
 }

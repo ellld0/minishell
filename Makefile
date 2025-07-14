@@ -24,7 +24,9 @@ SRC =   ast_debugger.c \
         wildcard_expansion.c  \
         builtins.c \
         builtin_dispatcher.c \
-        
+        env_management.c \
+        builtins2.c \
+
 
 		
 LIBFT_DIR = ./libft

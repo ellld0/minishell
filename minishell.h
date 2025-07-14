@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 16:24:58 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:10:49 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,18 @@ void		setup_interactive_mode_signals(void);
 void		setup_execution_mode_signals(void);
 void		reset_child_signals(void);
 
-int			builtin_pwd(void);
-int			builtin_env(t_shell *shell);
-int			builtin_echo(char **argv);
 int			is_builtin(const char *cmd);
 int			execute_builtin(t_shell *shell, char **argv);
+
+int			builtin_echo(char **argv);
+int			builtin_pwd(void);
+int			builtin_env(t_shell *shell);
 int			builtin_cd(t_shell *shell, char **argv);
+int			builtin_exit(t_shell *shell, char **argv);
+int			builtin_export(t_shell *shell, char **argv);
+int			builtin_unset(t_shell *shell, char **argv);
+
+void		add_or_update_env_var(t_shell *shell, char *new_var);
+void		remove_env_var(t_shell *shell, const char *var_name);
 
 #endif
