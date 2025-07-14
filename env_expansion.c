@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 13:53:40 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 14:16:01 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:11:42 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,19 @@ char	*expand_env_vars(t_shell *shell, const char *line)
 {
 	char	*new_str;
 	int		i;
+	char	in_single_quotes;
 	char	temp[2];
 
 	new_str = ft_strdup("");
 	i = 0;
+	in_single_quotes = 0;
 	temp[1] = '\0';
 	while (line[i])
 	{
-		if (line[i] == '$')
-		{
+		if (line[i] == '\'')
+			in_single_quotes = !in_single_quotes;
+		if (line[i] == '$' && !in_single_quotes)
 			i += handle_variable(&new_str, &line[i], shell);
-		}
 		else
 		{
 			temp[0] = line[i];

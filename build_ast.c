@@ -6,17 +6,37 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:23:11 by gabriel           #+#    #+#             */
-/*   Updated: 2025/07/14 14:41:24 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:03:06 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast_node	*parse_logical_op(t_parser *parser)
+static t_ast_node	*process_logical_op(t_parser *parser, t_ast_node *left)
 {
-	t_ast_node		*left;
 	t_ast_node		*op_node;
 	t_token_type	op_type;
+	t_node_type		node_type;
+
+	op_type = parser->current_token->type;
+	next_token(parser);
+	if (!parser->current_token)
+		return (syntax_error(NULL), free_ast(left), NULL);
+	if (op_type == TOKEN_OR)
+		node_type = NODE_OR;
+	else
+		node_type = NODE_AND;
+	op_node = create_ast_node(node_type);
+	op_node->u_as.operator.left = left;
+	op_node->u_as.operator.right = parse_pipe(parser);
+	if (!op_node->u_as.operator.right)
+		return (free_ast(op_node), NULL);
+	return (op_node);
+}
+
+t_ast_node	*parse_logical_op(t_parser *parser)
+{
+	t_ast_node	*left;
 
 	left = parse_pipe(parser);
 	if (!left)
@@ -24,17 +44,9 @@ t_ast_node	*parse_logical_op(t_parser *parser)
 	while (parser->current_token && (parser->current_token->type == TOKEN_AND
 			|| parser->current_token->type == TOKEN_OR))
 	{
-		op_type = parser->current_token->type;
-		next_token(parser);
-		if (!parser->current_token)
-			return (syntax_error(NULL), free_ast(left), NULL);
-		op_node = create_ast_node(
-				(t_node_type){NODE_AND, NODE_OR}[op_type == TOKEN_OR]);
-		op_node->u_as.operator.left = left;
-		op_node->u_as.operator.right = parse_pipe(parser);
-		if (!op_node->u_as.operator.right)
-			return (free_ast(op_node), NULL);
-		left = op_node;
+		left = process_logical_op(parser, left);
+		if (!left)
+			return (NULL);
 	}
 	return (left);
 }
@@ -90,7 +102,7 @@ t_ast_node	*build_ast(t_token *tokens)
 
 	if (!tokens)
 		return (NULL);
-	if (tokens->type != TOKEN_WORD)
+	if (tokens->type != TOKEN_WORD && tokens->type != TOKEN_LPAREN)
 		return (syntax_error(tokens->value), NULL);
 	parser.current_token = tokens;
 	return (parse_logical_op(&parser));

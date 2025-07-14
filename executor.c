@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 16:22:20 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:20:04 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 static void	child_process_execution(t_shell *shell, t_ast_node *node)
 {
 	char	*cmd_path;
+	char	*cmd;
 
+	cmd = node->u_as.command.argv[0];
 	reset_child_signals();
 	if (apply_redirections(&node->u_as.command) != 0)
 		exit(1);
-	cmd_path = find_command_path(node->u_as.command.argv[0]);
+	if (is_builtin(cmd))
+		exit(execute_builtin(shell, node->u_as.command.argv));
+	cmd_path = find_command_path(cmd);
 	if (!cmd_path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putendl_fd(node->u_as.command.argv[0], 2);
+		ft_putendl_fd(cmd, 2);
 		exit(127);
 	}
 	execve(cmd_path, node->u_as.command.argv, shell->env);
@@ -55,11 +59,13 @@ static int	parent_process_wait(pid_t pid)
 int	execute_command_node(t_shell *shell, t_ast_node *node)
 {
 	pid_t	pid;
+	char	*cmd;
 
 	expand_wildcards(node);
-	if (!node->u_as.command.argv || !node->u_as.command.argv[0])
+	cmd = node->u_as.command.argv[0];
+	if (!cmd)
 		return (0);
-	if (is_builtin(node->u_as.command.argv[0]))
+	if (is_state_changing_builtin(cmd))
 		return (execute_builtin(shell, node->u_as.command.argv));
 	pid = fork();
 	if (pid == -1)

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 14:29:24 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:20:58 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,6 @@ int			builtin_unset(t_shell *shell, char **argv);
 void		add_or_update_env_var(t_shell *shell, char *new_var);
 void		remove_env_var(t_shell *shell, const char *var_name);
 int			syntax_error(const char *token);
-
+int			is_state_changing_builtin(const char *cmd);
 
 #endif
