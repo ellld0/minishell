@@ -6,11 +6,9 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/13 15:15:48 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:42:37 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
 
 #include "minishell.h"
 
@@ -25,15 +23,18 @@ static void	process_line(t_shell *shell, char *line)
 	add_history(line);
 	expanded_line = expand_env_vars(shell, line);
 	free(line);
-	if (!expanded_line)
-		return ;
 	token_list = main_lexer(expanded_line);
-	ast_root = build_ast(token_list);
-	if (ast_root)
-		shell->last_exit_status = execute_ast(shell, ast_root);
-	free_token_list(token_list);
-	free_ast(ast_root);
 	free(expanded_line);
+	if (token_list)
+	{
+		ast_root = build_ast(token_list);
+		if (!ast_root)
+			shell->last_exit_status = 2;
+		else
+			shell->last_exit_status = execute_ast(shell, ast_root);
+		free_ast(ast_root);
+	}
+	free_token_list(token_list);
 }
 
 static void	interactive_shell(t_shell *shell)

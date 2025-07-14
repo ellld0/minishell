@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:23:11 by gabriel           #+#    #+#             */
-/*   Updated: 2025/07/09 12:26:27 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:41:24 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,23 @@ t_ast_node	*parse_logical_op(t_parser *parser)
 	t_ast_node		*left;
 	t_ast_node		*op_node;
 	t_token_type	op_type;
-	t_node_type		node_type;
 
 	left = parse_pipe(parser);
+	if (!left)
+		return (NULL);
 	while (parser->current_token && (parser->current_token->type == TOKEN_AND
 			|| parser->current_token->type == TOKEN_OR))
 	{
 		op_type = parser->current_token->type;
 		next_token(parser);
-		if (op_type == TOKEN_AND)
-			node_type = NODE_AND;
-		else
-			node_type = NODE_OR;
-		op_node = create_ast_node(node_type);
+		if (!parser->current_token)
+			return (syntax_error(NULL), free_ast(left), NULL);
+		op_node = create_ast_node(
+				(t_node_type){NODE_AND, NODE_OR}[op_type == TOKEN_OR]);
 		op_node->u_as.operator.left = left;
 		op_node->u_as.operator.right = parse_pipe(parser);
+		if (!op_node->u_as.operator.right)
+			return (free_ast(op_node), NULL);
 		left = op_node;
 	}
 	return (left);
@@ -43,12 +45,21 @@ t_ast_node	*parse_pipe(t_parser *parser)
 	t_ast_node	*pipe_node;
 
 	left = parse_simple_cmd(parser);
+	if (!left)
+		return (NULL);
 	while (parser->current_token && parser->current_token->type == TOKEN_PIPE)
 	{
 		next_token(parser);
+		if (!parser->current_token)
+			return (syntax_error(NULL), free_ast(left), NULL);
+		if (parser->current_token->type != TOKEN_WORD)
+			return (syntax_error(parser->current_token->value),
+				free_ast(left), NULL);
 		pipe_node = create_ast_node(NODE_PIPE);
 		pipe_node->u_as.operator.left = left;
 		pipe_node->u_as.operator.right = parse_simple_cmd(parser);
+		if (!pipe_node->u_as.operator.right)
+			return (free_ast(pipe_node), NULL);
 		left = pipe_node;
 	}
 	return (left);
@@ -61,33 +72,16 @@ int	handle_redirection(t_parser *parser, t_ast_node *node)
 
 	type = parser->current_token->type;
 	next_token(parser);
-	if (parser->current_token && parser->current_token->type == TOKEN_WORD)
+	if (!parser->current_token || parser->current_token->type != TOKEN_WORD)
 	{
-		redir = create_redir(type, parser->current_token->value);
-		add_redir_to_node(node, redir);
+		if (parser->current_token)
+			return (syntax_error(parser->current_token->value));
+		else
+			return (syntax_error("newline"));
 	}
-	else
-	{
-		write(2, "Syntax error near redirection\n", 30);
-		return (1);
-	}
+	redir = create_redir(type, parser->current_token->value);
+	add_redir_to_node(node, redir);
 	return (0);
-}
-
-void	populate_argv(t_ast_node *node, char **argv_list, int argc)
-{
-	int	i;
-
-	i = 0;
-	node->u_as.command.argv = malloc(sizeof(char *) * (argc + 1));
-	if (!node->u_as.command.argv)
-		return ;
-	while (i < argc)
-	{
-		node->u_as.command.argv[i] = argv_list[i];
-		i++;
-	}
-	node->u_as.command.argv[argc] = NULL;
 }
 
 t_ast_node	*build_ast(t_token *tokens)
@@ -96,6 +90,8 @@ t_ast_node	*build_ast(t_token *tokens)
 
 	if (!tokens)
 		return (NULL);
+	if (tokens->type != TOKEN_WORD)
+		return (syntax_error(tokens->value), NULL);
 	parser.current_token = tokens;
 	return (parse_logical_op(&parser));
 }
