@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 13:53:40 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 15:11:42 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:35:15 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,43 @@ static int	handle_variable(char **new_str, const char *line, t_shell *shell)
 	return (name_len + 1);
 }
 
-char	*expand_env_vars(t_shell *shell, const char *line)
+static void	process_char_for_expansion(t_shell *shell, const char *line,
+	t_expansion_state *state)
 {
-	char	*new_str;
-	int		i;
-	char	in_single_quotes;
 	char	temp[2];
 
-	new_str = ft_strdup("");
-	i = 0;
-	in_single_quotes = 0;
-	temp[1] = '\0';
-	while (line[i])
+	if (line[state->i] == '\'' || line[state->i] == '\"')
 	{
-		if (line[i] == '\'')
-			in_single_quotes = !in_single_quotes;
-		if (line[i] == '$' && !in_single_quotes)
-			i += handle_variable(&new_str, &line[i], shell);
-		else
-		{
-			temp[0] = line[i];
-			append_str(&new_str, temp);
-			i++;
-		}
+		if (state->quote_char == 0)
+			state->quote_char = line[state->i];
+		else if (state->quote_char == line[state->i])
+			state->quote_char = 0;
 	}
-	return (new_str);
+	if (line[state->i] == '$' && state->quote_char != '\'')
+	{
+		state->i += handle_variable(&state->new_str, &line[state->i], shell);
+	}
+	else
+	{
+		temp[0] = line[state->i];
+		temp[1] = '\0';
+		append_str(&state->new_str, temp);
+		state->i++;
+	}
+}
+
+char	*expand_env_vars(t_shell *shell, const char *line)
+{
+	t_expansion_state	state;
+
+	state.new_str = ft_strdup("");
+	if (!state.new_str)
+		return (NULL);
+	state.i = 0;
+	state.quote_char = 0;
+	while (line[state.i])
+	{
+		process_char_for_expansion(shell, line, &state);
+	}
+	return (state.new_str);
 }

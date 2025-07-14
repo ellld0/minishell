@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 16:33:29 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:32:35 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,13 @@ typedef struct s_quote_state
 	int		i;
 	int		j;
 }	t_quote_state;
+
+typedef struct s_expansion_state
+{
+	char	*new_str;
+	int		i;
+	char	quote_char;
+}	t_expansion_state;
 
 /* Function Prototypes */
 
