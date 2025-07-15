@@ -6,11 +6,26 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 15:20:04 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/15 13:22:22 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	remove_quotes_from_argv(char **argv)
+{
+	int		i;
+	char	*unquoted_arg;
+
+	i = 0;
+	while (argv[i])
+	{
+		unquoted_arg = remove_quotes(argv[i]);
+		free(argv[i]);
+		argv[i] = unquoted_arg;
+		i++;
+	}
+}
 
 static void	child_process_execution(t_shell *shell, t_ast_node *node)
 {
@@ -62,6 +77,7 @@ int	execute_command_node(t_shell *shell, t_ast_node *node)
 	char	*cmd;
 
 	expand_wildcards(node);
+	remove_quotes_from_argv(node->u_as.command.argv);
 	cmd = node->u_as.command.argv[0];
 	if (!cmd)
 		return (0);
