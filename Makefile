@@ -62,4 +62,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+debug: all
+	@valgrind --leak-check=full --show-leak-kinds=all \
+	--suppressions=./readline.supp ./$(NAME)
+
+.PHONY: all clean fclean re debug

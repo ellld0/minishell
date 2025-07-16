@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 17:20:47 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 17:47:43 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:47:37 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	**convert_list_to_argv(t_list *arg_list)
 	current = arg_list;
 	while (i < argc)
 	{
-		argv[i] = (char *)current->content;
+		argv[i] = ft_strdup((char *)current->content);
 		current = current->next;
 		i++;
 	}
@@ -104,5 +104,5 @@ void	expand_wildcards(t_ast_node *node)
 	}
 	free_argv(original_argv);
 	node->u_as.command.argv = convert_list_to_argv(new_argv_list);
-	ft_lstclear(&new_argv_list, NULL);
+	ft_lstclear(&new_argv_list, free);
 }

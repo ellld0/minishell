@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 13:59:45 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/15 13:54:50 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:44:06 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	**convert_list_to_argv(t_list *arg_list)
 	current = arg_list;
 	while (i < argc)
 	{
-		argv[i] = (char *)current->content;
+		argv[i] = ft_strdup((char *)current->content);
 		current = current->next;
 		i++;
 	}
@@ -82,7 +82,7 @@ t_ast_node	*parse_simple_cmd(t_parser *parser)
 	if (build_cmd_content(parser, node, &arg_list) != 0)
 		return (cleanup_cmd_on_error(node, arg_list));
 	node->u_as.command.argv = convert_list_to_argv(arg_list);
-	ft_lstclear(&arg_list, NULL);
+	ft_lstclear(&arg_list, free);
 	if (!node->u_as.command.argv && ft_lstsize(arg_list) > 0)
 		return (cleanup_cmd_on_error(node, NULL));
 	return (node);
