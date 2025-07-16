@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:23:11 by gabriel           #+#    #+#             */
-/*   Updated: 2025/07/14 16:35:56 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 18:52:19 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,13 @@ int	handle_redirection(t_parser *parser, t_ast_node *node)
 
 t_ast_node	*build_ast(t_token *tokens)
 {
-	t_parser	parser;
+	t_parser		parser;
+	t_token_type	type;
 
 	if (!tokens)
 		return (NULL);
-	if (tokens->type != TOKEN_WORD && tokens->type != TOKEN_LPAREN)
+	type = tokens->type;
+	if (type == TOKEN_AND || type == TOKEN_OR || type == TOKEN_RPAREN)
 		return (syntax_error(tokens->value), NULL);
 	parser.current_token = tokens;
 	return (parse_logical_op(&parser));

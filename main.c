@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 14:42:37 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 18:26:15 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	free_shell_env(&shell);
 	return (shell.last_exit_status);
 }
+
+
+// valgrind --leak-check=full --show-leak-kinds=all \
+//          --gen-suppressions=all ./minishell

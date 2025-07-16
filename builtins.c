@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:12:48 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 13:47:19 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 18:42:24 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	builtin_echo(char **argv)
 
 	i = 1;
 	n_option = 0;
-	if (argv[1] && ft_strcmp(argv[1], "-n") == 0)
+	while (argv[i] && ft_strcmp(argv[i], "-n") == 0)
 	{
 		n_option = 1;
 		i++;
