@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/16 19:01:37 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:04:57 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,15 @@ static void	child_process_execution(t_shell *shell, t_ast_node *node)
 	char	*cmd_path;
 	char	*cmd;
 
-	cmd = node->u_as.command.argv[0];
+	if (node->u_as.command.argv)
+		cmd = node->u_as.command.argv[0];
+	else
+		cmd = NULL;
 	reset_child_signals();
 	if (apply_redirections(&node->u_as.command) != 0)
 		exit(1);
+	if (!cmd)
+		exit(0);
 	if (is_builtin(cmd))
 		exit(execute_builtin(shell, node->u_as.command.argv));
 	cmd_path = find_command_path(cmd);
@@ -78,10 +83,11 @@ int	execute_command_node(t_shell *shell, t_ast_node *node)
 
 	expand_wildcards(node);
 	remove_quotes_from_argv(node->u_as.command.argv);
-	cmd = node->u_as.command.argv[0];
-	if (!cmd)
-		return (0);
-	if (is_state_changing_builtin(cmd))
+	if (node->u_as.command.argv)
+		cmd = node->u_as.command.argv[0];
+	else
+		cmd = NULL;
+	if (cmd && is_state_changing_builtin(cmd))
 		return (execute_builtin(shell, node->u_as.command.argv));
 	pid = fork();
 	if (pid == -1)
