@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:22:04 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 13:37:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:55:29 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ static int	handle_heredoc(t_redir *redir)
 		perror("pipe");
 		return (1);
 	}
+	redir->filename = remove_quotes(redir->filename);
 	read_heredoc_input(pipefd[1], redir->filename);
 	close(pipefd[1]);
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
