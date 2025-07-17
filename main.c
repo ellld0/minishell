@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 12:07:01 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:34:51 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	process_line(t_shell *shell, char *line)
 {
-	char		*expanded_line;
 	t_token		*token_list;
 	t_ast_node	*ast_root;
 	int			heredoc_count;
@@ -22,10 +21,8 @@ static void	process_line(t_shell *shell, char *line)
 	if (line[0] == '\0')
 		return ;
 	add_history(line);
-	expanded_line = expand_env_vars(shell, line);
+	token_list = main_lexer(line);
 	free(line);
-	token_list = main_lexer(expanded_line);
-	free(expanded_line);
 	if (token_list)
 	{
 		ast_root = build_ast(token_list);
@@ -76,7 +73,6 @@ int	main(int argc, char **argv, char **envp)
 	free_shell_env(&shell);
 	return (shell.last_exit_status);
 }
-
 
 // valgrind --leak-check=full --show-leak-kinds=all \
 //          --gen-suppressions=all ./minishell

@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/16 19:04:57 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:38:08 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	execute_ast(t_shell *shell, t_ast_node *node)
 
 	if (!node)
 		return (0);
+	expand_ast_nodes(shell, node);
 	if (node->type == NODE_COMMAND)
 		return (execute_command_node(shell, node));
 	if (node->type == NODE_PIPE)

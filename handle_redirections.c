@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:22:04 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 12:24:47 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:35:09 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,3 @@ static int	handle_redir_in(char *filename)
 	close(fd);
 	return (0);
 }
-
