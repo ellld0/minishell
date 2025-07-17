@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 12:03:14 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 13:40:42 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:49:34 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	process_single_heredoc(t_redir *redir, int *heredoc_count)
 	int		fd;
 	char	*line;
 
+	redir->filename = remove_quotes(redir->filename);
 	temp_filename = create_heredoc_file(*heredoc_count);
 	fd = open(temp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
