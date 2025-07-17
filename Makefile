@@ -29,7 +29,9 @@ SRC =   ast_debugger.c \
         syntax_error.c \
         parse_parentheses.c \
         heredoc.c \
-        expansion.c
+        expansion.c \
+        export.c \
+        append_env_var.c
 		
 LIBFT_DIR = ./libft
 

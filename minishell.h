@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 13:38:38 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 19:04:23 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,5 +193,9 @@ t_ast_node	*parse_primary(t_parser *parser);
 void		cleanup_heredocs(int heredoc_count);
 void		process_heredocs(t_ast_node *node, int *heredoc_count);
 void		expand_ast_nodes(t_shell *shell, t_ast_node *node);
+void		append_to_env_var(t_shell *shell, char *append_expr);
+void		print_export_env(t_shell *shell);
+int			is_valid_identifier(const char *str);
+void		process_export_argument(t_shell *shell, char *arg, int *ret_status);
 
 #endif
