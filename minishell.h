@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/14 18:32:35 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:25:40 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,7 @@ void		remove_env_var(t_shell *shell, const char *var_name);
 int			syntax_error(const char *token);
 int			is_state_changing_builtin(const char *cmd);
 t_ast_node	*parse_primary(t_parser *parser);
+void		cleanup_heredocs(int heredoc_count);
+void		process_heredocs(t_ast_node *node, int *heredoc_count);
 
 #endif

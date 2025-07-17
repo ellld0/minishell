@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:33:20 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/16 18:26:15 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:07:01 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	process_line(t_shell *shell, char *line)
 	char		*expanded_line;
 	t_token		*token_list;
 	t_ast_node	*ast_root;
+	int			heredoc_count;
 
 	if (line[0] == '\0')
 		return ;
@@ -28,10 +29,15 @@ static void	process_line(t_shell *shell, char *line)
 	if (token_list)
 	{
 		ast_root = build_ast(token_list);
-		if (!ast_root)
-			shell->last_exit_status = 2;
-		else
+		if (ast_root)
+		{
+			heredoc_count = 0;
+			process_heredocs(ast_root, &heredoc_count);
 			shell->last_exit_status = execute_ast(shell, ast_root);
+			cleanup_heredocs(heredoc_count);
+		}
+		else
+			shell->last_exit_status = 2;
 		free_ast(ast_root);
 	}
 	free_token_list(token_list);

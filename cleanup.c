@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:48:23 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/12 17:23:14 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:06:05 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,22 @@ void	free_ast(t_ast_node *node)
 		free_ast(node->u_as.operator.right);
 	}
 	free(node);
+}
+
+void	cleanup_heredocs(int heredoc_count)
+{
+	int		i;
+	char	*heredoc_index;
+	char	*filename;
+
+	i = 0;
+	while (i < heredoc_count)
+	{
+		heredoc_index = ft_itoa(i);
+		filename = ft_strjoin("/tmp/minishell_heredoc_", heredoc_index);
+		unlink(filename);
+		free(heredoc_index);
+		free(filename);
+		i++;
+	}
 }
