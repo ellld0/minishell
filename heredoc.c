@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 12:03:14 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 13:27:39 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:40:42 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ static char	*create_heredoc_file(int heredoc_index)
 static void	process_single_heredoc(t_redir *redir, int *heredoc_count)
 {
 	char	*temp_filename;
-	char	*delimiter;
 	int		fd;
 	char	*line;
 
-	delimiter = remove_quotes(redir->filename);
 	temp_filename = create_heredoc_file(*heredoc_count);
 	fd = open(temp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if (!line || ft_strcmp(line, redir->filename) == 0)
 		{
 			if (line)
 				free(line);
@@ -46,7 +44,6 @@ static void	process_single_heredoc(t_redir *redir, int *heredoc_count)
 		free(line);
 	}
 	close(fd);
-	free(delimiter);
 	free(redir->filename);
 	redir->filename = temp_filename;
 	redir->type = TOKEN_REDIR_IN;

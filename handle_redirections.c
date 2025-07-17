@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 14:22:04 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 13:35:09 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:41:12 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	apply_redirections(t_cmd_node *cmd)
 	}
 	return (0);
 }
-
 
 static int	handle_redir_out(t_redir *redir)
 {
