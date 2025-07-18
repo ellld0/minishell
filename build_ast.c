@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:23:11 by gabriel           #+#    #+#             */
-/*   Updated: 2025/07/16 18:52:19 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:05:23 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ static t_ast_node	*process_logical_op(t_parser *parser, t_ast_node *left)
 	t_ast_node		*op_node;
 	t_token_type	op_type;
 	t_node_type		node_type;
+	t_token_type	next_type;
 
 	op_type = parser->current_token->type;
 	next_token(parser);
 	if (!parser->current_token)
 		return (syntax_error(NULL), free_ast(left), NULL);
+	next_type = parser->current_token->type;
+	if (next_type == TOKEN_PIPE || next_type == TOKEN_AND
+		|| next_type == TOKEN_OR || next_type == TOKEN_RPAREN)
+		return (syntax_error(parser->current_token->value),
+			free_ast(left), NULL);
 	if (op_type == TOKEN_OR)
 		node_type = NODE_OR;
 	else
@@ -99,14 +105,23 @@ int	handle_redirection(t_parser *parser, t_ast_node *node)
 
 t_ast_node	*build_ast(t_token *tokens)
 {
-	t_parser		parser;
-	t_token_type	type;
+	t_parser	parser;
+	t_ast_node	*ast;
 
 	if (!tokens)
 		return (NULL);
-	type = tokens->type;
-	if (type == TOKEN_AND || type == TOKEN_OR || type == TOKEN_RPAREN)
+	if (tokens->type == TOKEN_AND || tokens->type == TOKEN_OR
+		|| tokens->type == TOKEN_PIPE || tokens->type == TOKEN_RPAREN)
+	{
 		return (syntax_error(tokens->value), NULL);
+	}
 	parser.current_token = tokens;
-	return (parse_logical_op(&parser));
+	ast = parse_logical_op(&parser);
+	if (ast && parser.current_token)
+	{
+		syntax_error(parser.current_token->value);
+		free_ast(ast);
+		return (NULL);
+	}
+	return (ast);
 }
