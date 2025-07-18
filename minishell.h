@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 19:04:23 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:09:30 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,5 +197,6 @@ void		append_to_env_var(t_shell *shell, char *append_expr);
 void		print_export_env(t_shell *shell);
 int			is_valid_identifier(const char *str);
 void		process_export_argument(t_shell *shell, char *arg, int *ret_status);
+int			is_numeric(const char *str);
 
 #endif
