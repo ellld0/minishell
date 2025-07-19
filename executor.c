@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gabriede <gabriede@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 17:36:12 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/19 12:43:15 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:36:27 by gabriede         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	child_process_execution(t_shell *shell, t_ast_node *node)
 		exit(0);
 	if (is_builtin(cmd))
 		exit(execute_builtin(shell, node->u_as.command.argv));
-	cmd_path = find_command_path(cmd);
+	cmd_path = find_command_path(cmd, shell);
 	if (!cmd_path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);

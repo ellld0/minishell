@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gabriede <gabriede@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 13:16:19 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/19 12:43:40 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:38:10 by gabriede         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*search_in_paths(char *cmd, char **paths)
 	return (NULL);
 }
 
-char	*find_command_path(char *cmd)
+char	*find_command_path(char *cmd, t_shell *shell)
 {
 	char	**paths;
 	char	*full_path;
@@ -65,7 +65,7 @@ char	*find_command_path(char *cmd)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	path_env = getenv("PATH");
+	path_env = get_env_value(shell->env, "PATH");
 	if (!path_env)
 		return (NULL);
 	paths = ft_split(path_env, ':');

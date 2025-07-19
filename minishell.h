@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gabriede <gabriede@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:33:34 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/19 12:43:33 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:36:49 by gabriede         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int			execute_pipe_node(t_shell *shell, t_ast_node *node);
 int			apply_redirections(t_cmd_node *cmd);
 
 /* path_finder.c */
-char		*find_command_path(char *cmd);
+char		*find_command_path(char *cmd, t_shell *shell);
 
 /* remove_quotes.c */
 char		*remove_quotes(char *str);
