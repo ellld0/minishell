@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gabriede <gabriede@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 13:50:21 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/19 12:41:07 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:05:41 by gabriede         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*get_env_value(char **env, const char *var_name)
 
 	i = 0;
 	name_len = ft_strlen(var_name);
+	if (ft_strcmp(var_name, "$") == 0)
+		return (ft_itoa(getpid()));
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], var_name, name_len) == 0)
@@ -36,7 +38,7 @@ char	*get_var_name(const char *str)
 	int	len;
 
 	len = 0;
-	while (ft_isalnum(str[len]) || str[len] == '_')
+	while (ft_isalnum(str[len]) || str[len] == '_' || str[len] == '$')
 		len++;
 	return (ft_substr(str, 0, len));
 }
