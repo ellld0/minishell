@@ -6,7 +6,7 @@
 /*   By: sdavi-al <sdavi-al@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 12:03:14 by sdavi-al          #+#    #+#             */
-/*   Updated: 2025/07/17 18:57:07 by sdavi-al         ###   ########.fr       */
+/*   Updated: 2025/07/19 12:40:21 by sdavi-al         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,14 @@ static char	*create_heredoc_file(int heredoc_index)
 	return (filename);
 }
 
-static void	process_single_heredoc(t_redir *redir, int *heredoc_count)
+static void	read_heredoc_to_fd(int fd, const char *delimiter)
 {
-	char	*temp_filename;
-	int		fd;
 	char	*line;
 
-	redir->filename = remove_quotes(redir->filename);
-	temp_filename = create_heredoc_file(*heredoc_count);
-	fd = open(temp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, redir->filename) == 0)
+		if (!line || ft_strcmp(line, delimiter) == 0)
 		{
 			if (line)
 				free(line);
@@ -44,7 +39,20 @@ static void	process_single_heredoc(t_redir *redir, int *heredoc_count)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+}
+
+void	process_single_heredoc(t_redir *redir, int *heredoc_count)
+{
+	char	*temp_filename;
+	char	*delimiter;
+	int		fd;
+
+	delimiter = remove_quotes(redir->filename);
+	temp_filename = create_heredoc_file(*heredoc_count);
+	fd = open(temp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	read_heredoc_to_fd(fd, delimiter);
 	close(fd);
+	free(delimiter);
 	free(redir->filename);
 	redir->filename = temp_filename;
 	redir->type = TOKEN_REDIR_IN;
